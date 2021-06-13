@@ -1,0 +1,26 @@
+name: Publish Dotnet Package (GPR)
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        source-url: https://nuget.pkg.github.com/XtermBlazor/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Build
+      run: dotnet build XtermBlazor -c Release
+    - name: Create the package
+      run: dotnet pack XtermBlazor -c Release
+    - name: Publish the package to GPR
+      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg

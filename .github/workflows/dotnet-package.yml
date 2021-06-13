@@ -1,0 +1,28 @@
+name: Dotnet Package
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dependencies
+      run: dotnet restore XtermBlazor
+    - name: Build
+      run: dotnet build XtermBlazor --no-restore
+    #- name: Test
+    #  run: dotnet test XtermBlazor --no-build --verbosity normal
