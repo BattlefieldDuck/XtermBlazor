@@ -1,0 +1,202 @@
+﻿@page "/"
+@using System.Text.Json;
+
+<h1>Hello, world!</h1>
+
+<p>Welcome to XtermBlazor Demo.</p>
+
+<div class="mb-2">
+    <input type="button" @onclick="HasSelection" value="HasSelection()" />
+    <input type="button" @onclick="GetSelection" value="GetSelection()" />
+    <input type="button" @onclick="GetSelectionPosition" value="GetSelectionPosition()" />
+    <input type="button" @onclick="ClearSelection" value="ClearSelection()" />
+    <input type="button" @onclick="SelectAll" value="SelectAll()" />
+    <input type="button" @onclick="ScrollToTop" value="ScrollToTop()" />
+    <input type="button" @onclick="ScrollToBottom" value="ScrollToBottom()" />
+    <input type="button" @onclick="Reset" value="Reset()" />
+</div>
+
+<div class="mb-2">
+    <input type="text" @bind-value="_input">
+    <input type="button" @onclick="Write" value="Write()" />
+    <input type="button" @onclick="WriteLine" value="WriteLine()" />
+
+    Cols: <input type="number" maxlength="4" size="4" @bind-value="_columns">
+    Rows: <input type="number" maxlength="4" size="4" @bind-value="_rows">
+    <input type="button" @onclick="Resize" value="Resize()" />
+    <input type="button" @onclick="GetRows" value="GetRows()" />
+    <input type="button" @onclick="GetColumns" value="GetColumns()" />
+</div>
+
+<Xterm
+    @ref="_terminal"
+    Options="_options"
+    OnFirstRender="@OnFirstRender"
+    OnBinary="@OnBinary"
+    OnCursorMove="@OnCursorMove"
+    OnData="@OnData"
+    OnKey="@OnKey"
+    OnLineFeed="@OnLineFeed"
+    OnScroll="@OnScroll"
+    OnSelectionChange="@OnSelectionChange"
+    OnRender="@OnRender"
+    OnResize="@OnResize"
+    OnTitleChange="@OnTitleChange"
+    OnBell="@OnBell"
+/>
+
+<br />
+
+EventCallback Logs:
+
+<Xterm @ref="_terminalEvent" Options="_options2" />
+
+@code {
+    private Xterm _terminal, _terminalEvent;
+
+    private TerminalOptions _options = new TerminalOptions
+    {
+        CursorBlink = true,
+        CursorStyle = CursorStyle.Bar,
+        Rows = 10,
+    };
+
+    private TerminalOptions _options2 = new TerminalOptions
+    {
+        Columns = 140,
+    };
+
+    private int _eventId = 0, _columns, _rows;
+    private string _input = "Hello World";
+
+    private async Task OnFirstRender()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnFirstRender()");
+
+        _columns = await _terminal.GetColumns();
+        _rows = await _terminal.GetRows();
+    }
+
+    private async Task OnBinary(string data)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnBinary(): {data}");
+    }
+
+    private async Task OnCursorMove()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnCursorMove()");
+    }
+
+    private async Task OnData(string data)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnData(): {data}");
+    }
+
+    private async Task OnKey(KeyboardEventArgs args)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): {args.Key}");
+    }
+
+    private async Task OnLineFeed()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnLineFeed()");
+    }
+
+    private async Task OnScroll(int newPosition)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnScroll(): newPosition: {newPosition}");
+    }
+
+    private async Task OnSelectionChange()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnSelectionChange()");
+    }
+
+    private async Task OnRender(RenderEventArgs args)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnRender(): {JsonSerializer.Serialize(args)}");
+    }
+
+    private async Task OnResize(ResizeEventArgs args)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnResize(): {JsonSerializer.Serialize(args)}");
+    }
+
+    private async Task OnTitleChange()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnTitleChange()");
+    }
+
+    private async Task OnBell()
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnBell()");
+    }
+
+    private async Task Write(MouseEventArgs args)
+    {
+        await _terminal.Write(_input);
+    }
+
+    private async Task WriteLine(MouseEventArgs args)
+    {
+        await _terminal.WriteLine(_input);
+    }
+
+    private async Task HasSelection(MouseEventArgs args)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) HasSelection(): {await _terminal.HasSelection()}");
+    }
+
+    private async Task GetSelection(MouseEventArgs args)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) GetSelection(): {await _terminal.GetSelection()}");
+    }
+
+    private async Task GetSelectionPosition(MouseEventArgs args)
+    {
+        var selectionPosition = await _terminal.GetSelectionPosition();
+        await _terminalEvent.WriteLine($"({++_eventId}) GetSelectionPosition(): {JsonSerializer.Serialize(selectionPosition)}");
+    }
+
+    private async Task ClearSelection(MouseEventArgs args)
+    {
+        await _terminal.ClearSelection();
+    }
+
+    private async Task SelectAll(MouseEventArgs args)
+    {
+        await _terminal.SelectAll();
+    }
+
+    private async Task ScrollToTop(MouseEventArgs args)
+    {
+        await _terminal.ScrollToTop();
+    }
+
+    private async Task ScrollToBottom(MouseEventArgs args)
+    {
+        await _terminal.ScrollToBottom();
+    }
+
+    private async Task Reset(MouseEventArgs args)
+    {
+        await _terminal.Reset();
+    }
+
+    private async Task Resize(MouseEventArgs args)
+    {
+        await _terminal.Resize(_columns, _rows);
+    }
+
+    private async Task GetRows(MouseEventArgs args)
+    {
+        var rows = await _terminal.GetRows();
+        await _terminalEvent.WriteLine($"({++_eventId}) GetRows(): {JsonSerializer.Serialize(rows)}");
+    }
+
+    private async Task GetColumns(MouseEventArgs args)
+    {
+        var cols = await _terminal.GetColumns();
+        await _terminalEvent.WriteLine($"({++_eventId}) GetColumns(): {JsonSerializer.Serialize(cols)}");
+    }
+}
