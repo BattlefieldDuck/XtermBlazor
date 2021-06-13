@@ -1,10 +1,11 @@
 # XtermBlazor
 
-Brings xterm.js charts to Blazor
+Brings xterm.js to Blazor
 
 ## Prerequisites
 
 - [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [Node.js](https://nodejs.org/en/download/)
 
 ## Installation
 

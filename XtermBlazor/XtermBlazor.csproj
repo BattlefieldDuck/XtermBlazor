@@ -21,7 +21,7 @@
     <RepositoryUrl>https://github.com/BattlefieldDuck/XtermBlazor</RepositoryUrl>
     <PackageProjectUrl>https://github.com/BattlefieldDuck/XtermBlazor</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Description>Brings xterm.js charts to Blazor</Description>
+    <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   
