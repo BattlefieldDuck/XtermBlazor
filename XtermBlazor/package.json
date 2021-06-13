@@ -1,7 +1,8 @@
 {
   "name": "xterm-blazor",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "description": "Brings xterm.js charts to Blazor",
   "main": "index.js",
   "scripts": {
     "build": "webpack-cli"

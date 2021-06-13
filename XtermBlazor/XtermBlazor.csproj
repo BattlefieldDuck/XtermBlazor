@@ -17,6 +17,12 @@
   <PropertyGroup>
     <!-- VS's FastUpToDateCheck doesn't consider .ts file changes, so it's necessary to disable it to get incremental builds to work correctly (albeit not as fast as if FastUpToDateCheck did work for them) -->
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <Authors>BattlefieldDuck</Authors>
+    <RepositoryUrl>https://github.com/BattlefieldDuck/XtermBlazor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/BattlefieldDuck/XtermBlazor</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Brings xterm.js charts to Blazor</Description>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   
   <ItemGroup>
@@ -25,6 +31,17 @@
   
   <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
