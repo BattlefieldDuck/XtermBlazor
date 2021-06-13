@@ -2,6 +2,8 @@
 
 Brings xterm.js to Blazor
 
+Live Demo: [https://xtermblazor.project.tatlead.com](https://xtermblazor.project.tatlead.com)
+
 ## Prerequisites
 
 - [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
@@ -59,4 +61,8 @@ In the HTML body section of either `index.html` or `_Host.cshtml` add this:
     }
 }
 ```
+
+## Demo
+- [XtermBlazor.Demo.Server](/XtermBlazor.Demo.Server/Pages/Index.razor)
+- [XtermBlazor.Demo.Wasm](/XtermBlazor.Demo.Wasm/Pages/Index.razor)
 
