@@ -23,7 +23,8 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm, xtermblazor</PackageTags>
   </PropertyGroup>
   
   <ItemGroup>
