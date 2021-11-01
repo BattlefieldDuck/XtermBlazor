@@ -296,67 +296,127 @@ namespace XtermBlazor
         //public WindowOptions? WindowOptions { get; set; }
     }
 
+    /// <summary>
+    /// The type of the bell notification the terminal will use.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum BellStyle
     {
+        /// <summary>
+        /// None
+        /// </summary>
         [EnumMember(Value = "none")]
         None,
 
+        /// <summary>
+        /// Sound
+        /// </summary>
         [EnumMember(Value = "sound")]
         Sound
     }
 
+    /// <summary>
+    /// The style of the cursor.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum CursorStyle
     {
+        /// <summary>
+        /// Block
+        /// </summary>
         [EnumMember(Value = "block")]
         Block,
 
+        /// <summary>
+        /// Underline
+        /// </summary>
         [EnumMember(Value = "underline")]
         Underline,
 
+        /// <summary>
+        /// Bar
+        /// </summary>
         [EnumMember(Value = "bar")]
         Bar
     }
 
+    /// <summary>
+    /// The modifier key hold to multiply scroll speed.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum FastScrollModifier
     {
+        /// <summary>
+        /// Alt
+        /// </summary>
         [EnumMember(Value = "alt")]
         Alt,
 
+        /// <summary>
+        /// Ctrl
+        /// </summary>
         [EnumMember(Value = "ctrl")]
         Ctrl,
 
+        /// <summary>
+        /// Shift
+        /// </summary>
         [EnumMember(Value = "shift")]
         Shift
     }
 
+    /// <summary>
+    /// What log level to use.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LogLevel
     {
+        /// <summary>
+        /// Debug
+        /// </summary>
         [EnumMember(Value = "debug")]
         Debug,
 
+        /// <summary>
+        /// Info (default)
+        /// </summary>
         [EnumMember(Value = "info")]
         Info,
 
+        /// <summary>
+        /// Warn
+        /// </summary>
         [EnumMember(Value = "warn")]
         Warn,
 
+        /// <summary>
+        /// Error
+        /// </summary>
         [EnumMember(Value = "error")]
         Error,
 
+        /// <summary>
+        /// Off
+        /// </summary>
         [EnumMember(Value = "off")]
         Off
     }
 
+    /// <summary>
+    /// The type of renderer to use, this allows using the fallback DOM renderer when canvas is too slow for the environment.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum RendererType
     {
+        /// <summary>
+        /// Dom
+        /// </summary>
         [EnumMember(Value = "dom")]
         Dom,
 
+        /// <summary>
+        /// Canvas
+        /// </summary>
         [EnumMember(Value = "canvas")]
         Canvas
     }

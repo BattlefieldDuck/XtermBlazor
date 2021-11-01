@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
   
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -23,10 +22,12 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.0.2</Version>
+    <Version>1.1.0</Version>
     <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm, xtermblazor</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <WebpackInputs Include="**\*.ts" Exclude="node_modules\**" />
   </ItemGroup>
@@ -48,12 +49,15 @@
   
   <ItemGroup>
     <Content Update="package-lock.json">
+      <Pack>False</Pack>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Update="package.json">
+      <Pack>False</Pack>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Update="tsconfig.json">
+      <Pack>False</Pack>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

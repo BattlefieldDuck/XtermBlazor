@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+﻿using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace XtermBlazor
 {
+    /// <summary>
+    /// Xterm Handler
+    /// </summary>
     public static class XtermHandler
     {
         private static readonly Dictionary<string, Xterm> _terminals = new Dictionary<string, Xterm>();
 
+        /// <summary>
+        /// Register Terminal
+        /// </summary>
+        /// <param name="terminal"></param>
         public static void RegisterTerminal(Xterm terminal)
         {
             _terminals[terminal.ElementReference.Id] = terminal;
         }
 
+        /// <summary>
+        /// Dispose Terminal
+        /// </summary>
+        /// <param name="referenceId"></param>
         public static void DisposeTerminal(string referenceId)
         {
             if (_terminals.ContainsKey(referenceId))
@@ -26,6 +33,15 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a binary event fires. This is used to
+        /// enable non UTF-8 conformant binary messages to be sent to the backend.
+        /// Currently this is only used for a certain type of mouse reports that
+        /// happen to be not UTF-8 compatible.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnBinary(string referenceId, string data)
         {
@@ -35,6 +51,11 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for the cursor moves.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnCursorMove(string referenceId)
         {
@@ -44,6 +65,12 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a data event fires.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnData(string referenceId, string data)
         {
@@ -53,6 +80,12 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a key is pressed.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnKey(string referenceId, KeyboardEventArgs @event)
         {
@@ -62,6 +95,11 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a line feed is added.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnLineFeed(string referenceId)
         {
@@ -71,6 +109,12 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a scroll occurs.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="newPosition"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnScroll(string referenceId, int newPosition)
         {
@@ -80,6 +124,11 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when a selection change occurs.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnSelectionChange(string referenceId)
         {
@@ -89,6 +138,12 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when rows are rendered.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnRender(string referenceId, RenderEventArgs @event)
         {
@@ -98,6 +153,12 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when the terminal is resized.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnResize(string referenceId, ResizeEventArgs @event)
         {
@@ -107,15 +168,26 @@ namespace XtermBlazor
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when an OSC 0 or OSC 2 title change occurs.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
         [JSInvokable]
-        public static async Task OnTitleChange(string referenceId)
+        public static async Task OnTitleChange(string referenceId, string title)
         {
             if (_terminals.ContainsKey(referenceId))
             {
-                await _terminals[referenceId].OnTitleChange.InvokeAsync();
+                await _terminals[referenceId].OnTitleChange.InvokeAsync(title);
             }
         }
 
+        /// <summary>
+        /// Adds an event listener for when the bell is triggered.
+        /// </summary>
+        /// <param name="referenceId"></param>
+        /// <returns></returns>
         [JSInvokable]
         public static async Task OnBell(string referenceId)
         {

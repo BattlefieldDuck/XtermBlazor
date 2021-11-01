@@ -122,9 +122,9 @@ EventCallback Logs:
         await _terminalEvent.WriteLine($"({++_eventId}) OnResize(): {JsonSerializer.Serialize(args)}");
     }
 
-    private async Task OnTitleChange()
+    private async Task OnTitleChange(string title)
     {
-        await _terminalEvent.WriteLine($"({++_eventId}) OnTitleChange()");
+        await _terminalEvent.WriteLine($"({++_eventId}) OnTitleChange(): title: {title}");
     }
 
     private async Task OnBell()

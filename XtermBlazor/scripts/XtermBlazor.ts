@@ -39,8 +39,8 @@ class XtermBlazor {
 			const newEvent = { columns: event.cols, rows: event.rows } // Change cols to columns
 			await DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnResize', id, newEvent)
 		})
-		terminal.onTitleChange(async () => {
-			await DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id)
+		terminal.onTitleChange(async (title: string) => {
+			await DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id, title)
 		})
 		terminal.onBell(async () => {
 			await DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBell', id)

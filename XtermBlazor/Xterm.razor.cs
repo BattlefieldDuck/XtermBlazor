@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace XtermBlazor
 {
+    /// <summary>
+    /// Xterm Element
+    /// </summary>
     public partial class Xterm : ComponentBase, IAsyncDisposable
     {
         private const string NAMESPACE_PREFIX = "XtermBlazor";
@@ -13,6 +16,9 @@ namespace XtermBlazor
         [Inject]
         internal IJSRuntime JSRuntime { get; set; }
 
+        /// <summary>
+        /// Represents a reference to a rendered element.
+        /// </summary>
         public ElementReference ElementReference { get; set; }
 
         /// <summary>
@@ -115,6 +121,7 @@ namespace XtermBlazor
         public EventCallback OnBell { get; set; }
         #endregion
 
+        /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -364,6 +371,7 @@ namespace XtermBlazor
             await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.reset", Id);
         }
 
+        /// <inheritdoc />
         public async ValueTask DisposeAsync()
         {
             XtermHandler.DisposeTerminal(Id);
