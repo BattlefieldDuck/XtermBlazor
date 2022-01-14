@@ -141,51 +141,51 @@ namespace XtermBlazor
         /// The number of rows in the terminal's viewport.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> GetRows()
+        public ValueTask<int> GetRows()
         {
-            return await JSRuntime.InvokeAsync<int>($"{NAMESPACE_PREFIX}.getRows", Id);
+            return JSRuntime.InvokeAsync<int>($"{NAMESPACE_PREFIX}.getRows", Id);
         }
 
         /// <summary>
         /// The number of columns in the terminal's viewport.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> GetColumns()
+        public ValueTask<int> GetColumns()
         {
-            return await JSRuntime.InvokeAsync<int>($"{NAMESPACE_PREFIX}.getCols", Id);
+            return JSRuntime.InvokeAsync<int>($"{NAMESPACE_PREFIX}.getCols", Id);
         }
 
         /// <summary>
         /// Unfocus the terminal.
         /// </summary>
-        public async Task Blur()
+        public ValueTask Blur()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.blur", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.blur", Id);
         }
 
         /// <summary>
         /// Focus the terminal.
         /// </summary>
-        public async Task Focus()
+        public ValueTask Focus()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.focus", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.focus", Id);
         }
 
         /// <summary>
         /// Resizes the terminal.
         /// </summary>
-        public async Task Resize(int columns, int rows)
+        public ValueTask Resize(int columns, int rows)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.resize", Id, columns, rows);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.resize", Id, columns, rows);
         }
 
         /// <summary>
         /// Gets whether the terminal has an active selection.
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> HasSelection()
+        public ValueTask<bool> HasSelection()
         {
-           return await JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.hasSelection", Id);
+           return JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.hasSelection", Id);
         }
 
         /// <summary>
@@ -193,26 +193,26 @@ namespace XtermBlazor
         /// copy behavior outside of xterm.js.
         /// </summary>
         /// <returns></returns>
-        public async Task<string> GetSelection()
+        public ValueTask<string> GetSelection()
         {
-            return await JSRuntime.InvokeAsync<string>($"{NAMESPACE_PREFIX}.getSelection", Id);
+            return JSRuntime.InvokeAsync<string>($"{NAMESPACE_PREFIX}.getSelection", Id);
         }
 
         /// <summary>
         /// Gets the selection position or undefined if there is no selection.
         /// </summary>
         /// <returns></returns>
-        public async Task<SelectionPosition> GetSelectionPosition()
+        public ValueTask<SelectionPosition> GetSelectionPosition()
         {
-            return await JSRuntime.InvokeAsync<SelectionPosition>($"{NAMESPACE_PREFIX}.getSelectionPosition", Id);
+            return JSRuntime.InvokeAsync<SelectionPosition>($"{NAMESPACE_PREFIX}.getSelectionPosition", Id);
         }
 
         /// <summary>
         /// Clears the current terminal selection.
         /// </summary>
-        public async Task ClearSelection()
+        public ValueTask ClearSelection()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.clearSelection", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.clearSelection", Id);
         }
 
         /// <summary>
@@ -222,17 +222,17 @@ namespace XtermBlazor
         /// <param name="row">The row the selection starts at.</param>
         /// <param name="length">The length of the selection.</param>
         /// <returns></returns>
-        public async Task Select(int column, int row, int length)
+        public ValueTask Select(int column, int row, int length)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.select", Id, column, row, length);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.select", Id, column, row, length);
         }
 
         /// <summary>
         /// Selects all text within the terminal.
         /// </summary>
-        public async Task SelectAll()
+        public ValueTask SelectAll()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.selectAll", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.selectAll", Id);
         }
 
         /// <summary>
@@ -241,9 +241,9 @@ namespace XtermBlazor
         /// <param name="start">The 0-based line index to select from (inclusive).</param>
         /// <param name="end">The 0-based line index to select to (inclusive).</param>
         /// <returns></returns>
-        public async Task SelectLines(int start, int end)
+        public ValueTask SelectLines(int start, int end)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.selectLines", Id, start, end);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.selectLines", Id, start, end);
         }
 
         /// <summary>
@@ -251,9 +251,9 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="amount">The number of lines to scroll down (negative scroll up).</param>
         /// <returns></returns>
-        public async Task ScrollLines(int amount)
+        public ValueTask ScrollLines(int amount)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollLines", Id, amount);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollLines", Id, amount);
         }
 
         /// <summary>
@@ -261,27 +261,27 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="pageCount">The number of pages to scroll (negative scrolls up).</param>
         /// <returns></returns>
-        public async Task ScrollPages(int pageCount)
+        public ValueTask ScrollPages(int pageCount)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollPages", Id, pageCount);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollPages", Id, pageCount);
         }
 
         /// <summary>
         /// Scrolls the display of the terminal to the top.
         /// </summary>
         /// <returns></returns>
-        public async Task ScrollToTop()
+        public ValueTask ScrollToTop()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToTop", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToTop", Id);
         }
 
         /// <summary>
         /// Scrolls the display of the terminal to the bottom.
         /// </summary>
         /// <returns></returns>
-        public async Task ScrollToBottom()
+        public ValueTask ScrollToBottom()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToBottom", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToBottom", Id);
         }
 
         /// <summary>
@@ -289,27 +289,27 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="line">The 0-based line index to scroll to.</param>
         /// <returns></returns>
-        public async Task ScrollToLine(int line)
+        public ValueTask ScrollToLine(int line)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToLine", Id, line);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.scrollToLine", Id, line);
         }
 
         /// <summary>
         /// Clear the entire buffer, making the prompt line the new first line.
         /// </summary>
         /// <returns></returns>
-        public async Task Clear()
+        public ValueTask Clear()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.clear", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.clear", Id);
         }
 
         /// <summary>
         /// Write data to the terminal.
         /// </summary>
         /// <param name="data">The data to write to the terminal.</param>
-        public async Task Write(string data)
+        public ValueTask Write(string data)
         {
-            await JSRuntime.InvokeAsync<object>($"{NAMESPACE_PREFIX}.write", Id, data);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.write", Id, data);
         }
 
         /// <summary>
@@ -317,18 +317,18 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="data">The data to write to the terminal.</param>
         /// <returns></returns>
-        public async Task Write(byte[] data)
+        public ValueTask Write(byte[] data)
         {
-            await JSRuntime.InvokeAsync<object>($"{NAMESPACE_PREFIX}.write", Id, data);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.write", Id, data);
         }
 
         /// <summary>
         /// Writes data to the terminal, followed by a break line character (\n).
         /// </summary>
         /// <param name="data">The data to write to the terminal.</param>
-        public async Task WriteLine(string data)
+        public ValueTask WriteLine(string data)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.writeln", Id, data);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.writeln", Id, data);
         }
 
         /// <summary>
@@ -336,9 +336,9 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="data">The data to write to the terminal.</param>
         /// <returns></returns>
-        public async Task WriteLine(byte[] data)
+        public ValueTask WriteLine(byte[] data)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.writeln", Id, data);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.writeln", Id, data);
         }
 
         /// <summary>
@@ -346,9 +346,9 @@ namespace XtermBlazor
         /// </summary>
         /// <param name="data">The text to write to the terminal.</param>
         /// <returns></returns>
-        public async Task Paste(string data)
+        public ValueTask Paste(string data)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.paste", Id, data);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.paste", Id, data);
         }
 
         /// <summary>
@@ -357,18 +357,18 @@ namespace XtermBlazor
         /// <param name="start">The row to start from (between 0 and this.rows - 1).</param>
         /// <param name="end">The row to end at (between start and this.rows - 1).</param>
         /// <returns></returns>
-        public async Task Refresh(int start, int end)
+        public ValueTask Refresh(int start, int end)
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.refresh", Id, start, end);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.refresh", Id, start, end);
         }
 
         /// <summary>
         /// Perform a full reset (RIS, aka '\x1bc').
         /// </summary>
         /// <returns></returns>
-        public async Task Reset()
+        public ValueTask Reset()
         {
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.reset", Id);
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.reset", Id);
         }
 
         /// <inheritdoc />
