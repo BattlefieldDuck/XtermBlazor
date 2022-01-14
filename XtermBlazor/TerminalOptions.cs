@@ -261,9 +261,9 @@ namespace XtermBlazor
         /// <summary>
         /// The color theme of the terminal.
         /// </summary>
-        //[JsonPropertyName("theme")]
-        //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        //public Theme? Theme { get; set; }
+        [JsonPropertyName("theme")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Theme? Theme { get; set; }
 
         /// <summary>
         /// Whether "Windows mode" is enabled. Because Windows backends winpty and
