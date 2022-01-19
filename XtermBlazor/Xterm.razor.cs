@@ -33,6 +33,12 @@ namespace XtermBlazor
         [Parameter]
         public string Id { get; set; }
 
+        /// <summary>
+        /// An array containing addon Ids that will be loaded and used.
+        /// </summary>
+        [Parameter]
+        public string[] AddonIds { get; set; } = Array.Empty<string>();
+
         #region EventCallbacks
         /// <summary>
         /// Adds an event listener for when first rendered.
@@ -131,7 +137,7 @@ namespace XtermBlazor
 
                 XtermHandler.RegisterTerminal(this);
 
-                await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options);
+                await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options, AddonIds);
 
                 await OnFirstRender.InvokeAsync();
             }
@@ -369,6 +375,30 @@ namespace XtermBlazor
         public ValueTask Reset()
         {
             return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.reset", Id);
+        }
+
+        /// <summary>
+        /// Invokes the specified addon function asynchronously.
+        /// </summary>
+        /// <param name="addonId">Addon Id</param>
+        /// <param name="functionName">The function name that will be invoked</param>
+        /// <param name="args">The function arguments</param>
+        /// <returns></returns>
+        public ValueTask<T> InvokeAddonFunctionAsync<T>(string addonId, string functionName, params object[] args)
+        {
+            return JSRuntime.InvokeAsync<T>($"{NAMESPACE_PREFIX}.invokeAddonFunction", Id, addonId, functionName, args);
+        }
+
+        /// <summary>
+        /// Invokes the specified addon function asynchronously.
+        /// </summary>
+        /// <param name="addonId">Addon Id</param>
+        /// <param name="functionName">The function name that will be invoked</param>
+        /// <param name="args">The function arguments</param>
+        /// <returns></returns>
+        public ValueTask InvokeAddonFunctionVoidAsync(string addonId, string functionName, params object[] args)
+        {
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.invokeAddonFunction", Id, addonId, functionName, args);
         }
 
         /// <inheritdoc />
