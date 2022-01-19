@@ -27,6 +27,14 @@
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 
     <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search@0.8.2/lib/xterm-addon-search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.5.0/lib/xterm-addon-web-links.min.js"></script>
+    <script>
+        window.XtermBlazor.registerAddon("xterm-addon-fit", new window.FitAddon.FitAddon());
+        window.XtermBlazor.registerAddon("xterm-addon-search", new window.SearchAddon.SearchAddon());
+        window.XtermBlazor.registerAddon("xterm-addon-web-links", new window.WebLinksAddon.WebLinksAddon());
+    </script>
 </body>
 
 </html>

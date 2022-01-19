@@ -14,6 +14,8 @@
     <input type="button" @onclick="ScrollToTop" value="ScrollToTop()" />
     <input type="button" @onclick="ScrollToBottom" value="ScrollToBottom()" />
     <input type="button" @onclick="Reset" value="Reset()" />
+    <input type="button" @onclick="GetRows" value="GetRows()" />
+    <input type="button" @onclick="GetColumns" value="GetColumns()" />
 </div>
 
 <div class="mb-2">
@@ -24,13 +26,15 @@
     Cols: <input type="number" maxlength="4" size="4" @bind-value="_columns">
     Rows: <input type="number" maxlength="4" size="4" @bind-value="_rows">
     <input type="button" @onclick="Resize" value="Resize()" />
-    <input type="button" @onclick="GetRows" value="GetRows()" />
-    <input type="button" @onclick="GetColumns" value="GetColumns()" />
+  
+    <input type="text" @bind-value="_searchInput">
+    <input type="button" @onclick="Search" value="Search()" />
 </div>
 
 <Xterm
     @ref="_terminal"
     Options="_options"
+    AddonIds="_addonIds"
     OnFirstRender="@OnFirstRender"
     OnBinary="@OnBinary"
     OnCursorMove="@OnCursorMove"
@@ -65,16 +69,25 @@ EventCallback Logs:
         },
     };
 
+    private string[] _addonIds = new string[]
+    {
+        "xterm-addon-fit",
+        "xterm-addon-search",
+        "xterm-addon-web-links",
+    };
+
     private TerminalOptions _options2 = new TerminalOptions
     {
         Columns = 140,
     };
 
     private int _eventId = 0, _columns, _rows;
-    private string _input = "Hello World";
+    private string _searchInput = "", _input = "Hello World";
 
     private async Task OnFirstRender()
     {
+        await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
+
         await _terminalEvent.WriteLine($"({++_eventId}) OnFirstRender()");
 
         _columns = await _terminal.GetColumns();
@@ -185,6 +198,12 @@ EventCallback Logs:
     private async Task Reset(MouseEventArgs args)
     {
         await _terminal.Reset();
+    }
+
+    private async Task Search(MouseEventArgs args)
+    {
+        bool searchSuccess = await _terminal.InvokeAddonFunctionAsync<bool>("xterm-addon-search", "findNext", _searchInput);
+        await _terminalEvent.WriteLine($"({++_eventId}) Search(): {searchSuccess}");
     }
 
     private async Task Resize(MouseEventArgs args)
