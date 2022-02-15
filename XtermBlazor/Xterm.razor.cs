@@ -417,9 +417,8 @@ namespace XtermBlazor
                     // Possible TaskCanceledException in .NET 5 when using InvokeVoidAsync
                     // System.Threading.Tasks.TaskCanceledException: A task was canceled.
                     // System.AggregateException: Exceptions were encountered while disposing components. (A task was canceled.) (A task was canceled.)
-                    // Possible fix by using InvokeAsync<T> instead of InvokeVoidAsync
 
-                    await JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
+                    await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
                 }
                 catch (Exception ex) when (ex.GetType().Name == "JSDisconnectedException")
                 {
