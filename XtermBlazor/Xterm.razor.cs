@@ -419,7 +419,7 @@ namespace XtermBlazor
                     // System.AggregateException: Exceptions were encountered while disposing components. (A task was canceled.) (A task was canceled.)
                     // Possible fix by using InvokeAsync<T> instead of InvokeVoidAsync
 
-                    await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
+                    await JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
                 }
                 catch (Exception ex) when (ex.GetType().Name == "JSDisconnectedException")
                 {
