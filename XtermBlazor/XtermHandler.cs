@@ -18,18 +18,18 @@ namespace XtermBlazor
         /// <param name="terminal"></param>
         public static void RegisterTerminal(Xterm terminal)
         {
-            _terminals[terminal.ElementReference.Id] = terminal;
+            _terminals[terminal.Id] = terminal;
         }
 
         /// <summary>
         /// Dispose Terminal
         /// </summary>
-        /// <param name="referenceId"></param>
-        public static void DisposeTerminal(string referenceId)
+        /// <param name="id"></param>
+        public static void DisposeTerminal(string id)
         {
-            if (_terminals.ContainsKey(referenceId))
+            if (_terminals.ContainsKey(id))
             {
-                _terminals.Remove(referenceId);
+                _terminals.Remove(id);
             }
         }
 
@@ -45,153 +45,128 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnBinary(string id, string data)
         {
-            return _terminals.ContainsKey(id) ? _terminals[id].OnBinary.InvokeAsync(data) : Task.CompletedTask;
+            return GetTerminalById(id)?.OnBinary.InvokeAsync(data);
         }
 
         /// <summary>
         /// Adds an event listener for the cursor moves.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnCursorMove(string referenceId)
+        public static Task OnCursorMove(string id)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnCursorMove.InvokeAsync();
-            }
+            return GetTerminalById(id)?.OnCursorMove.InvokeAsync();
         }
 
         /// <summary>
         /// Adds an event listener for when a data event fires.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="data"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnData(string referenceId, string data)
+        public static Task OnData(string id, string data)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnData.InvokeAsync(data);
-            }
+            return GetTerminalById(id)?.OnData.InvokeAsync(data);
         }
 
         /// <summary>
         /// Adds an event listener for when a key is pressed.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="event"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnKey(string referenceId, KeyboardEventArgs @event)
+        public static Task OnKey(string id, KeyboardEventArgs @event)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnKey.InvokeAsync(@event);
-            }
+            return GetTerminalById(id)?.OnKey.InvokeAsync(@event);
         }
 
         /// <summary>
         /// Adds an event listener for when a line feed is added.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnLineFeed(string referenceId)
+        public static Task OnLineFeed(string id)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnLineFeed.InvokeAsync();
-            }
+            return GetTerminalById(id)?.OnLineFeed.InvokeAsync();
         }
 
         /// <summary>
         /// Adds an event listener for when a scroll occurs.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="newPosition"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnScroll(string referenceId, int newPosition)
+        public static Task OnScroll(string id, int newPosition)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnScroll.InvokeAsync(newPosition);
-            }
+            return GetTerminalById(id)?.OnScroll.InvokeAsync(newPosition);
         }
 
         /// <summary>
         /// Adds an event listener for when a selection change occurs.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnSelectionChange(string referenceId)
+        public static Task OnSelectionChange(string id)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnSelectionChange.InvokeAsync();
-            }
+            return GetTerminalById(id)?.OnSelectionChange.InvokeAsync();
         }
 
         /// <summary>
         /// Adds an event listener for when rows are rendered.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="event"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnRender(string referenceId, RenderEventArgs @event)
+        public static Task OnRender(string id, RenderEventArgs @event)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnRender.InvokeAsync(@event);
-            }
+            return GetTerminalById(id)?.OnRender.InvokeAsync(@event);
         }
 
         /// <summary>
         /// Adds an event listener for when the terminal is resized.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="event"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnResize(string referenceId, ResizeEventArgs @event)
+        public static Task OnResize(string id, ResizeEventArgs @event)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnResize.InvokeAsync(@event);
-            }
+            return GetTerminalById(id)?.OnResize.InvokeAsync(@event);
         }
 
         /// <summary>
         /// Adds an event listener for when an OSC 0 or OSC 2 title change occurs.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="title"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnTitleChange(string referenceId, string title)
+        public static Task OnTitleChange(string id, string title)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnTitleChange.InvokeAsync(title);
-            }
+            return GetTerminalById(id)?.OnTitleChange.InvokeAsync(title);
         }
 
         /// <summary>
         /// Adds an event listener for when the bell is triggered.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnBell(string referenceId)
+        public static Task OnBell(string id)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnBell.InvokeAsync();
-            }
+            return GetTerminalById(id)?.OnBell.InvokeAsync();
+        }
+
+        private static Xterm GetTerminalById(string id)
+        {
+            return _terminals.ContainsKey(id) ? _terminals[id] : null;
         }
     }
 }
