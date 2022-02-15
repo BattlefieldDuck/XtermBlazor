@@ -25,13 +25,13 @@ namespace XtermBlazor
         /// An object containing a set of options.
         /// </summary>
         [Parameter]
-        public TerminalOptions Options { get; set; } = new TerminalOptions();
+        public TerminalOptions Options { get; set; } = new();
 
         /// <summary>
         /// Terminal id. This defaults to ElementReference.Id.
         /// </summary>
         [Parameter]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
 
         /// <summary>
         /// An array containing addon Ids that will be loaded and used.
@@ -132,6 +132,9 @@ namespace XtermBlazor
         {
             if (firstRender)
             {
+                // The ElementReference is only used in OnAfterRenderAsync and not in any earlier lifecycle method because there's no JavaScript element until after the component is rendered.
+                // https://docs.microsoft.com/en-us/aspnet/core/blazor/components/lifecycle?view=aspnetcore-6.0
+
                 // Use ElementReference.Id if original Id is null or whitespace
                 Id = string.IsNullOrWhiteSpace(Id) ? ElementReference.Id : Id;
 
@@ -404,9 +407,28 @@ namespace XtermBlazor
         /// <inheritdoc />
         public async ValueTask DisposeAsync()
         {
-            XtermHandler.DisposeTerminal(Id);
+            if (!string.IsNullOrEmpty(Id))
+            {
+                XtermHandler.DisposeTerminal(Id);
 
-            await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
+                try
+                {
+                    // Possible .NET 5 SignalR bug, should be fixed in .NET 6
+                    // Possible TaskCanceledException in .NET 5 when using InvokeVoidAsync
+                    // System.Threading.Tasks.TaskCanceledException: A task was canceled.
+                    // System.AggregateException: Exceptions were encountered while disposing components. (A task was canceled.) (A task was canceled.)
+                    // Possible fix by using InvokeAsync<T> instead of InvokeVoidAsync
+
+                    await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
+                }
+                catch (Exception ex) when (ex.GetType().Name == "JSDisconnectedException")
+                {
+                    // Fix .NET 6 JSDisconnectedException
+                    // Microsoft.JSInterop.JSDisconnectedException: JavaScript interop calls cannot be issued at this time. This is because the circuit has disconnected and is being disposed.
+                }
+            }
+
+            GC.SuppressFinalize(this);
         }
     }
 }
