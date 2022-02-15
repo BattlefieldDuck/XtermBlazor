@@ -263,7 +263,7 @@ namespace XtermBlazor
         /// </summary>
         [JsonPropertyName("theme")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Theme Theme { get; set; } = new Theme();
+        public Theme Theme { get; set; } = new();
 
         /// <summary>
         /// Whether "Windows mode" is enabled. Because Windows backends winpty and
