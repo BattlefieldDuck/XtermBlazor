@@ -10,7 +10,7 @@ namespace XtermBlazor
     /// </summary>
     public static class XtermHandler
     {
-        private static readonly Dictionary<string, Xterm> _terminals = new Dictionary<string, Xterm>();
+        private static readonly Dictionary<string, Xterm> _terminals = new();
 
         /// <summary>
         /// Register Terminal
@@ -39,16 +39,13 @@ namespace XtermBlazor
         /// Currently this is only used for a certain type of mouse reports that
         /// happen to be not UTF-8 compatible.
         /// </summary>
-        /// <param name="referenceId"></param>
+        /// <param name="id"></param>
         /// <param name="data"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static async Task OnBinary(string referenceId, string data)
+        public static Task OnBinary(string id, string data)
         {
-            if (_terminals.ContainsKey(referenceId))
-            {
-                await _terminals[referenceId].OnBinary.InvokeAsync(data);
-            }
+            return _terminals.ContainsKey(id) ? _terminals[id].OnBinary.InvokeAsync(data) : Task.CompletedTask;
         }
 
         /// <summary>
