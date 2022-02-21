@@ -63,7 +63,7 @@ class XtermBlazor {
 	 * @param id
 	 */
 	disposeTerminal(id: string) {
-		this.getTerminalById(id).terminal.dispose();
+		this._terminals.get(id)?.terminal.dispose();
 		this._terminals.delete(id);
 	}
 
