@@ -233,7 +233,7 @@ EventCallback Logs:
         };
 
         var options = await _terminal.GetOptions();
-        await _terminalEvent.WriteLine($"({++_eventId}) GetOptions(): {JsonSerializer.Serialize(options, serializerOptions)}");
+        await _terminalEvent.WriteLine($"({++_eventId}) GetOptions(): {JsonSerializer.Serialize(options, serializerOptions).Replace("\n", "\r\n")}");
     }
 
     private async Task SetOptions(MouseEventArgs args)
