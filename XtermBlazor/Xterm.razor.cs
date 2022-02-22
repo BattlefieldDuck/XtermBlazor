@@ -165,6 +165,25 @@ namespace XtermBlazor
         }
 
         /// <summary>
+        /// Gets the terminal options.
+        /// </summary>
+        /// <returns></returns>
+        public ValueTask<TerminalOptions> GetOptions()
+        {
+            return JSRuntime.InvokeAsync<TerminalOptions>($"{NAMESPACE_PREFIX}.getOptions", Id);
+        }
+
+        /// <summary>
+        /// Sets the terminal options.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public ValueTask SetOptions(TerminalOptions options)
+        {
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.setOptions", Id, options);
+        }
+
+        /// <summary>
         /// Unfocus the terminal.
         /// </summary>
         public ValueTask Blur()

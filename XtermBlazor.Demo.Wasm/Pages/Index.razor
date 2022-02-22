@@ -16,6 +16,8 @@
     <input type="button" @onclick="Reset" value="Reset()" />
     <input type="button" @onclick="GetRows" value="GetRows()" />
     <input type="button" @onclick="GetColumns" value="GetColumns()" />
+    <input type="button" @onclick="GetOptions" value="GetOptions()" />
+    <input type="button" @onclick="SetOptions" value="SetOptions()" />
 </div>
 
 <div class="mb-2">
@@ -221,5 +223,32 @@ EventCallback Logs:
     {
         var cols = await _terminal.GetColumns();
         await _terminalEvent.WriteLine($"({++_eventId}) GetColumns(): {JsonSerializer.Serialize(cols)}");
+    }
+
+    private async Task GetOptions(MouseEventArgs args)
+    {
+        var serializerOptions = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+
+        var options = await _terminal.GetOptions();
+        await _terminalEvent.WriteLine($"({++_eventId}) GetOptions(): {JsonSerializer.Serialize(options, serializerOptions)}");
+    }
+
+    private async Task SetOptions(MouseEventArgs args)
+    {
+        Random random = new Random();
+        string color = $"#{random.Next(0x1000000):X6}";
+
+        await _terminal.SetOptions(new TerminalOptions
+        {
+            Theme =
+            {
+                Background = color
+            }
+        });
+
+        await _terminalEvent.WriteLine($"({++_eventId}) SetOptions(): Set Background color to {color}");
     }
 }

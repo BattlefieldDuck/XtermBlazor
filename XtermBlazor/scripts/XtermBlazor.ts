@@ -1,4 +1,4 @@
-import { Terminal, ITerminalOptions, ITerminalAddon } from 'xterm';
+import { ITerminalAddon, ITerminalOptions, Terminal } from 'xterm';
 
 declare var DotNet: any;
 
@@ -70,6 +70,8 @@ class XtermBlazor {
 	// Functions
 	getRows = (id: string) => this.getTerminalById(id).terminal.rows;
 	getCols = (id: string) => this.getTerminalById(id).terminal.cols;
+	getOptions = (id: string) => this.getTerminalById(id).terminal.options;
+	setOptions = (id: string, options: ITerminalOptions) => this.getTerminalById(id).terminal.options = options;
 	blur = (id: string) => this.getTerminalById(id).terminal.blur();
 	focus = (id: string) => this.getTerminalById(id).terminal.focus();
 	resize = (id: string, columns: number, rows: number) => this.getTerminalById(id).terminal.resize(columns, rows);

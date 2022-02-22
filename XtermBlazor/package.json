@@ -10,13 +10,13 @@
   "author": "BattlefieldDuck",
   "license": "MIT",
   "dependencies": {
-    "xterm": "^4.12.0"
+    "xterm": "^4.17.0"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^9.0.0",
-    "ts-loader": "^9.2.3",
-    "typescript": "^4.3.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.2"
+    "copy-webpack-plugin": "^9.1.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
   }
 }
