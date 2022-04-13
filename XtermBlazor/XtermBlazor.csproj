@@ -1,16 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   
   <ItemGroup>
     <SupportedPlatform Include="browser" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Macross.Json.Extensions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.7" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -22,10 +17,11 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm, xtermblazor</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -45,6 +41,11 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Macross.Json.Extensions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.4" />
   </ItemGroup>
   
   <ItemGroup>

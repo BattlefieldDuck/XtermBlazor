@@ -41,7 +41,7 @@ namespace XtermBlazor
         /// </summary>
         [JsonPropertyName("bellSound")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string BellSound { get; set; }
+        public string? BellSound { get; set; }
 
         /// <summary>
         /// The type of the bell notification the terminal will use.
@@ -130,21 +130,21 @@ namespace XtermBlazor
         /// </summary>
         [JsonPropertyName("fontFamily")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string FontFamily { get; set; }
+        public string? FontFamily { get; set; }
 
         /// <summary>
         /// The font weight used to render non-bold text.
         /// </summary>
         [JsonPropertyName("fontWeight")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string FontWeight { get; set; }
+        public string? FontWeight { get; set; }
 
         /// <summary>
         /// The font weight used to render bold text.
         /// </summary>
         [JsonPropertyName("fontWeightBold")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string FontWeightBold { get; set; }
+        public string? FontWeightBold { get; set; }
 
         /// <summary>
         /// The spacing in whole pixels between characters.
@@ -285,7 +285,7 @@ namespace XtermBlazor
         /// </summary>
         [JsonPropertyName("wordSeparator")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string WordSeparator { get; set; }
+        public string? WordSeparator { get; set; }
 
         /// <summary>
         /// Enable various window manipulation and report features.

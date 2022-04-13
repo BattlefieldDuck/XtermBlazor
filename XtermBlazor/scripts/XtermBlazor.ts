@@ -67,7 +67,7 @@ class XtermBlazor {
 		this._terminals.delete(id);
 	}
 
-	// Functions
+	// Xterm Functions
 	getRows = (id: string) => this.getTerminalById(id).terminal.rows;
 	getCols = (id: string) => this.getTerminalById(id).terminal.cols;
 	getOptions = (id: string) => this.getTerminalById(id).terminal.options;
@@ -93,10 +93,21 @@ class XtermBlazor {
 	paste = (id: string, data: string) => this.getTerminalById(id).terminal.paste(data);
 	refresh = (id: string, start: number, end: number) => this.getTerminalById(id).terminal.refresh(start, end);
 	reset = (id: string) => this.getTerminalById(id).terminal.reset();
+
+	/**
+	 * Invoke addon function
+	 * @param id
+	 * @param addonId
+	 * @param functionName
+	 */
 	invokeAddonFunction(id: string, addonId: string, functionName: string) {
 		return this.getTerminalById(id).addons.get(addonId)[functionName](...arguments[3]);
 	}
 
+	/**
+	 * Get Terminal object by Id
+	 * @param id
+	 */
 	getTerminalById(id: string): { terminal: Terminal, addons: Map<string, ITerminalAddon> } {
 		const terminal = this._terminals.get(id);
 

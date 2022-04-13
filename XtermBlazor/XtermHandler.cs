@@ -45,7 +45,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnBinary(string id, string data)
         {
-            return GetTerminalById(id)?.OnBinary.InvokeAsync(data);
+            return GetTerminalById(id)?.OnBinary.InvokeAsync(data) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnCursorMove(string id)
         {
-            return GetTerminalById(id)?.OnCursorMove.InvokeAsync();
+            return GetTerminalById(id)?.OnCursorMove.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnData(string id, string data)
         {
-            return GetTerminalById(id)?.OnData.InvokeAsync(data);
+            return GetTerminalById(id)?.OnData.InvokeAsync(data) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnKey(string id, KeyboardEventArgs @event)
         {
-            return GetTerminalById(id)?.OnKey.InvokeAsync(@event);
+            return GetTerminalById(id)?.OnKey.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnLineFeed(string id)
         {
-            return GetTerminalById(id)?.OnLineFeed.InvokeAsync();
+            return GetTerminalById(id)?.OnLineFeed.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnScroll(string id, int newPosition)
         {
-            return GetTerminalById(id)?.OnScroll.InvokeAsync(newPosition);
+            return GetTerminalById(id)?.OnScroll.InvokeAsync(newPosition) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnSelectionChange(string id)
         {
-            return GetTerminalById(id)?.OnSelectionChange.InvokeAsync();
+            return GetTerminalById(id)?.OnSelectionChange.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnRender(string id, RenderEventArgs @event)
         {
-            return GetTerminalById(id)?.OnRender.InvokeAsync(@event);
+            return GetTerminalById(id)?.OnRender.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnResize(string id, ResizeEventArgs @event)
         {
-            return GetTerminalById(id)?.OnResize.InvokeAsync(@event);
+            return GetTerminalById(id)?.OnResize.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnTitleChange(string id, string title)
         {
-            return GetTerminalById(id)?.OnTitleChange.InvokeAsync(title);
+            return GetTerminalById(id)?.OnTitleChange.InvokeAsync(title) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -161,10 +161,10 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnBell(string id)
         {
-            return GetTerminalById(id)?.OnBell.InvokeAsync();
+            return GetTerminalById(id)?.OnBell.InvokeAsync() ?? Task.CompletedTask;
         }
 
-        private static Xterm GetTerminalById(string id)
+        private static Xterm? GetTerminalById(string id)
         {
             return _terminals.ContainsKey(id) ? _terminals[id] : null;
         }

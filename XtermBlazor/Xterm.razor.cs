@@ -11,10 +11,10 @@ namespace XtermBlazor
     /// </summary>
     public partial class Xterm : ComponentBase, IAsyncDisposable
     {
-        private const string NAMESPACE_PREFIX = "XtermBlazor";
+        private const string NAMESPACE_PREFIX = nameof(XtermBlazor);
 
         [Inject]
-        internal IJSRuntime JSRuntime { get; set; }
+        internal IJSRuntime JSRuntime { get; set; } = default!;
 
         /// <summary>
         /// Represents a reference to a rendered element.
@@ -135,8 +135,8 @@ namespace XtermBlazor
                 // The ElementReference is only used in OnAfterRenderAsync and not in any earlier lifecycle method because there's no JavaScript element until after the component is rendered.
                 // https://docs.microsoft.com/en-us/aspnet/core/blazor/components/lifecycle?view=aspnetcore-6.0
 
-                // Use ElementReference.Id if original Id is null or whitespace
-                Id = string.IsNullOrWhiteSpace(Id) ? ElementReference.Id : Id;
+                // Use ElementReference.Id if original Id
+                Id = string.IsNullOrEmpty(Id) ? ElementReference.Id : Id;
 
                 XtermHandler.RegisterTerminal(this);
 
@@ -429,6 +429,8 @@ namespace XtermBlazor
             if (!string.IsNullOrEmpty(Id))
             {
                 XtermHandler.DisposeTerminal(Id);
+
+                ElementReference = default;
 
                 try
                 {
