@@ -10,7 +10,7 @@ Live Demo: [https://xtermblazor.project.tatlead.com](https://xtermblazor.project
 
 ## Prerequisites
 
-- [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 - [Node.js](https://nodejs.org/en/download/)
 
 ## Installation
