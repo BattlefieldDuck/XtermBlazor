@@ -24,7 +24,7 @@ namespace XtermBlazor
         /// <summary>
         /// Determine whether the terminal is registered and rendered.
         /// </summary>
-        public bool IsReady { get; private set; }
+        public bool IsRendered { get; private set; }
 
         /// <summary>
         /// An object containing a set of options.
@@ -147,7 +147,7 @@ namespace XtermBlazor
 
                 await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options, AddonIds);
 
-                IsReady = true;
+                IsRendered = true;
 
                 await OnFirstRender.InvokeAsync();
             }
