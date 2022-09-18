@@ -2,9 +2,15 @@ import { ITerminalAddon, ITerminalOptions, Terminal } from 'xterm';
 
 declare var DotNet: any;
 
+interface ITerminalObject {
+	terminal: Terminal,
+	addons: Map<string, ITerminalAddon>,
+	customKeyEventHandler: (event: KeyboardEvent) => boolean
+}
+
 class XtermBlazor {
 	private readonly _ASSEMBLY_NAME = 'XtermBlazor';
-	private readonly _terminals = new Map<string, { terminal: Terminal, addons: Map<string, ITerminalAddon> }>();
+	private readonly _terminals = new Map<string, ITerminalObject>();
 	private readonly _addonList = new Map<string, ITerminalAddon>();
 
 	/**
@@ -30,6 +36,16 @@ class XtermBlazor {
 		terminal.onResize((event: { cols: number, rows: number }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnResize', id, { columns: event.cols, rows: event.rows }));
 		terminal.onTitleChange((title: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id, title));
 		terminal.onBell(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBell', id));
+		terminal.attachCustomKeyEventHandler((event: KeyboardEvent) => {
+			if (this.getTerminalById(id).customKeyEventHandler) {
+				// Asynchronous for both Blazor Server and Blazor WebAssembly apps.
+				DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, { key: event.key, domEvent: event });
+				return this.getTerminalById(id).customKeyEventHandler(event);
+			} else {
+				// Synchronous for Blazor WebAssembly apps only.
+				return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, { key: event.key, domEvent: event });
+            }
+        });
 
 		// Load and set addons
 		const addons = new Map<string, ITerminalAddon>();
@@ -46,6 +62,7 @@ class XtermBlazor {
 		this._terminals.set(id, {
 			terminal: terminal,
 			addons: addons,
+			customKeyEventHandler: undefined,
 		});
 	}
 
@@ -108,7 +125,7 @@ class XtermBlazor {
 	 * Get Terminal object by Id
 	 * @param id
 	 */
-	getTerminalById(id: string): { terminal: Terminal, addons: Map<string, ITerminalAddon> } {
+	getTerminalById(id: string): ITerminalObject {
 		const terminal = this._terminals.get(id);
 
 		if (!terminal) {

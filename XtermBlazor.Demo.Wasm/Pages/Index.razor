@@ -58,6 +58,9 @@ EventCallback Logs:
 <Xterm @ref="_terminalEvent" Options="_options2" />
 
 @code {
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
     private Xterm _terminal, _terminalEvent;
 
     private TerminalOptions _options = new TerminalOptions
@@ -88,9 +91,34 @@ EventCallback Logs:
 
     private async Task OnFirstRender()
     {
-        await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
-
         await _terminalEvent.WriteLine($"({++_eventId}) OnFirstRender()");
+
+        bool isWebAssembly = JSRuntime is IJSInProcessRuntime;
+
+        if (isWebAssembly)
+        {
+            // Blazor WebAssembly
+            _terminal.AttachCustomKeyEventHandler((args) =>
+            {
+                _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}");
+
+                return true;
+            });
+        }
+        else
+        {
+            // Blazor Server
+            await _terminal.AttachCustomKeyEventHandlerEvaluate("(event) => true");
+
+            _terminal.AttachCustomKeyEventHandler((args) =>
+            {
+                _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}");
+
+                return true;
+            });
+        }
+
+        await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
 
         _columns = await _terminal.GetColumns();
         _rows = await _terminal.GetRows();

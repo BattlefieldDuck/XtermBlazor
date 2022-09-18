@@ -10,7 +10,7 @@
   "author": "BattlefieldDuck",
   "license": "MIT",
   "dependencies": {
-    "xterm": "^4.19.0"
+    "xterm": "^5.0.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^9.1.0",

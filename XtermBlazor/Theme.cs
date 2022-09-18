@@ -38,9 +38,23 @@ namespace XtermBlazor
         /// <summary>
         /// The selection background color (can be transparent)
         /// </summary>
-        [JsonPropertyName("selection")]
+        [JsonPropertyName("selectionBackground")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? Selection { get; set; }
+        public string? SelectionBackground { get; set; }
+
+        /// <summary>
+        /// The selection foreground color
+        /// </summary>
+        [JsonPropertyName("selectionForeground")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? SelectionForeground { get; set; }
+
+        /// <summary>
+        /// The selection background color when the terminal does not have focus (can be transparent)
+        /// </summary>
+        [JsonPropertyName("selectionInactiveBackground")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? SelectionInactiveBackground { get; set; }
 
         /// <summary>
         /// ANSI black (eg. `\x1b[30m`)

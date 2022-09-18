@@ -132,6 +132,14 @@ namespace XtermBlazor
         public EventCallback OnBell { get; set; }
         #endregion
 
+        /// <summary>
+        /// The custom KeyboardEvent handler to attach.
+        /// This is a function that takes a KeyboardEvent,
+        /// allowing consumers to stop propagation and/or prevent the default action.
+        /// The function returns whether the event should be processed by xterm.js.
+        /// </summary>
+        public Func<KeyboardEventArgs, bool> CustomKeyEventHandler { get; private set; } = (_) => true;
+
         /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -169,6 +177,47 @@ namespace XtermBlazor
         public ValueTask<int> GetColumns()
         {
             return JSRuntime.InvokeAsync<int>($"{NAMESPACE_PREFIX}.getCols", Id);
+        }
+
+        /// <summary>
+        /// Attaches a custom key event handler which is run before keys are
+        /// processed, giving consumers of xterm.js ultimate control as to what keys
+        /// should be processed by the terminal and what keys should not.
+        /// </summary>
+        /// <remarks>
+        /// Note: The return boolean of <c>customKeyEventHandler</c> is ignored on Blazor Server.
+        /// If you wish to pass the return value to xterm.js, 
+        /// please use <see cref="AttachCustomKeyEventHandlerEvaluate"/> instead.
+        /// </remarks> 
+        /// <param name="customKeyEventHandler">
+        /// The custom KeyboardEvent handler to attach.
+        /// This is a function that takes a KeyboardEvent, allowing consumers to stop
+        /// propagation and/or prevent the default action. The function returns
+        /// whether the event should be processed by xterm.js.
+        /// </param>
+        public void AttachCustomKeyEventHandler(Func<KeyboardEventArgs, bool> customKeyEventHandler)
+        {
+            CustomKeyEventHandler = customKeyEventHandler;
+        }
+
+        /// <summary>
+        /// Attaches a custom key event handler which is run before keys are
+        /// processed, giving consumers of xterm.js ultimate control as to what keys
+        /// should be processed by the terminal and what keys should not.
+        /// </summary>
+        /// <remarks>
+        /// Note: If your project is using Blazor WebAssembly, you can use <see cref="AttachCustomKeyEventHandler"/> instead.
+        /// </remarks>
+        /// <param name="customKeyEventHandler">
+        /// The custom KeyboardEvent handler to attach.
+        /// This is a function that takes a KeyboardEvent, allowing consumers to stop
+        /// propagation and/or prevent the default action. The function returns
+        /// whether the event should be processed by xterm.js.
+        /// </param>
+        /// <returns></returns>
+        public ValueTask AttachCustomKeyEventHandlerEvaluate(string customKeyEventHandler = "function (event) { return true; }")
+        {
+            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}._terminals.get('{Id}').customKeyEventHandler = {customKeyEventHandler}");
         }
 
         /// <summary>

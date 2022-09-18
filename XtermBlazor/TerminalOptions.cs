@@ -11,8 +11,7 @@ namespace XtermBlazor
     {
         /// <summary>
         /// Whether to allow the use of proposed API. When false, any usage of APIs
-        /// marked as experimental/proposed will throw an error. This defaults to
-        /// true currently, but will change to false in v5.0.
+        /// marked as experimental/proposed will throw an error. The default is false.
         /// </summary>
         [JsonPropertyName("allowProposedApi")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -37,18 +36,11 @@ namespace XtermBlazor
         public bool? AltClickMovesCursor { get; set; }
 
         /// <summary>
-        /// A data uri of the sound to use for the bell when `bellStyle = 'sound'`.
+        /// The number of columns in the terminal.
         /// </summary>
-        [JsonPropertyName("bellSound")]
+        [JsonPropertyName("cols")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? BellSound { get; set; }
-
-        /// <summary>
-        /// The type of the bell notification the terminal will use.
-        /// </summary>
-        [JsonPropertyName("bellStyle")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public BellStyle? BellStyle { get; set; }
+        public int? Columns { get; set; }
 
         /// <summary>
         /// When enabled the cursor will be set to the beginning of the next line
@@ -63,13 +55,6 @@ namespace XtermBlazor
         public bool? ConvertEOL { get; set; }
 
         /// <summary>
-        /// The number of columns in the terminal.
-        /// </summary>
-        [JsonPropertyName("cols")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? Columns { get; set; }
-
-        /// <summary>
         /// Whether the cursor blinks.
         /// </summary>
         [JsonPropertyName("cursorBlink")]
@@ -82,6 +67,16 @@ namespace XtermBlazor
         [JsonPropertyName("cursorStyle")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CursorStyle? CursorStyle { get; set; }
+
+        /// <summary>
+        /// Whether to draw custom glyphs for block element and box drawing characters instead of using
+        /// the font. This should typically result in better rendering with continuous lines, even when
+        /// line height and letter spacing is used. Note that this doesn't work with the DOM renderer
+        /// which renders all characters using the font. The default is true.
+        /// </summary>
+        [JsonPropertyName("customGlyphs")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? CustomGlyphs { get; set; }
 
         /// <summary>
         /// The width of the cursor in CSS pixels when `cursorStyle` is set to 'bar'.
@@ -297,25 +292,6 @@ namespace XtermBlazor
     }
 
     /// <summary>
-    /// The type of the bell notification the terminal will use.
-    /// </summary>
-    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum BellStyle
-    {
-        /// <summary>
-        /// None
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None,
-
-        /// <summary>
-        /// Sound
-        /// </summary>
-        [EnumMember(Value = "sound")]
-        Sound
-    }
-
-    /// <summary>
     /// The style of the cursor.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -346,6 +322,12 @@ namespace XtermBlazor
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum FastScrollModifier
     {
+        /// <summary>
+        /// None
+        /// </summary>
+        [EnumMember(Value = "none")]
+        None,
+
         /// <summary>
         /// Alt
         /// </summary>

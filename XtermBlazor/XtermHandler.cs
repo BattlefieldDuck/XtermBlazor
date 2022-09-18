@@ -164,6 +164,18 @@ namespace XtermBlazor
             return GetTerminalById(id)?.OnBell.InvokeAsync() ?? Task.CompletedTask;
         }
 
+        /// <summary>
+        /// An event handler before keys are processed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
+        [JSInvokable]
+        public static bool AttachCustomKeyEventHandler(string id, KeyboardEventArgs @event)
+        {
+            return GetTerminalById(id)?.CustomKeyEventHandler.Invoke(@event) ?? true;
+        }
+
         private static Xterm? GetTerminalById(string id)
         {
             return _terminals.ContainsKey(id) ? _terminals[id] : null;
