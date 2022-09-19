@@ -54,8 +54,10 @@
 <br />
 
 EventCallback Logs:
+<br />
+<input type="checkbox" @onchange="@((e) => showAttachCustomKeyEventHandlerLog = !showAttachCustomKeyEventHandlerLog)"> Show AttachCustomKeyEventHandler() Log
 
-<Xterm @ref="_terminalEvent" Options="_options2" />
+<Xterm @ref="_terminalEvent" Options="_options2" AddonIds="_addonIds" />
 
 @code {
     [Inject]
@@ -86,6 +88,7 @@ EventCallback Logs:
         Columns = 140,
     };
 
+    private bool showAttachCustomKeyEventHandlerLog;
     private int _eventId = 0, _columns, _rows;
     private string _searchInput = "", _input = "Hello World";
 
@@ -100,7 +103,10 @@ EventCallback Logs:
             // Blazor WebAssembly
             _terminal.AttachCustomKeyEventHandler((args) =>
             {
-                _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}");
+                if (showAttachCustomKeyEventHandlerLog)
+                {
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
+                }
 
                 return true;
             });
@@ -112,13 +118,18 @@ EventCallback Logs:
 
             _terminal.AttachCustomKeyEventHandler((args) =>
             {
-                _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}");
+                if (showAttachCustomKeyEventHandlerLog)
+                {
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
+                }
 
+                // The return value is ignored on Blazor Server, AttachCustomKeyEventHandlerEvaluate is used for handling that
                 return true;
             });
         }
 
         await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
+        await _terminalEvent.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
 
         _columns = await _terminal.GetColumns();
         _rows = await _terminal.GetRows();
@@ -141,7 +152,7 @@ EventCallback Logs:
 
     private async Task OnKey(KeyboardEventArgs args)
     {
-        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): {args.Key}");
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): {JsonSerializer.Serialize(args)}");
     }
 
     private async Task OnLineFeed()
@@ -156,7 +167,7 @@ EventCallback Logs:
 
     private async Task OnSelectionChange()
     {
-        await _terminalEvent.WriteLine($"({++_eventId}) OnSelectionChange()");
+        await _terminalEvent.WriteLine($"({++_eventId}) OnSelectionChange(): GetSelection(): {await _terminal.GetSelection()}");
     }
 
     private async Task OnRender(RenderEventArgs args)

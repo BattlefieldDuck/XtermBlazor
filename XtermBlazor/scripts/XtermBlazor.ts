@@ -28,7 +28,7 @@ class XtermBlazor {
 		terminal.onBinary((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBinary', id, data));
 		terminal.onCursorMove(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnCursorMove', id));
 		terminal.onData((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnData', id, data));
-		terminal.onKey((event: { key: string, domEvent: KeyboardEvent }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, event));
+		terminal.onKey((event: { key: string, domEvent: KeyboardEvent }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, this.convertToArgs(event.domEvent)));
 		terminal.onLineFeed(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnLineFeed', id));
 		terminal.onScroll((newPosition: number) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnScroll', id, newPosition));
 		terminal.onSelectionChange(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnSelectionChange', id));
@@ -37,13 +37,13 @@ class XtermBlazor {
 		terminal.onTitleChange((title: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id, title));
 		terminal.onBell(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBell', id));
 		terminal.attachCustomKeyEventHandler((event: KeyboardEvent) => {
-			if (this.getTerminalById(id).customKeyEventHandler) {
-				// Asynchronous for both Blazor Server and Blazor WebAssembly apps.
-				DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, { key: event.key, domEvent: event });
-				return this.getTerminalById(id).customKeyEventHandler(event);
-			} else {
+			try {
 				// Synchronous for Blazor WebAssembly apps only.
-				return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, { key: event.key, domEvent: event });
+				return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, this.convertToArgs(event));
+			} catch {
+				// Asynchronous for both Blazor Server and Blazor WebAssembly apps.
+				DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, this.convertToArgs(event));
+				return this.getTerminalById(id).customKeyEventHandler?.call(event) ?? true;
             }
         });
 
@@ -133,6 +133,24 @@ class XtermBlazor {
 		}
 
 		return terminal;
+	}
+
+	/**
+	 * Convert to Microsoft.AspNetCore.Components.Web.KeyboardEventArgs
+	 * @param event
+	 */
+	private convertToArgs(event: KeyboardEvent) {
+		return {
+			key: event.key,
+			code: event.code,
+			location: event.location,
+			repeat: event.repeat,
+			ctrlKey: event.ctrlKey,
+			shiftKey: event.shiftKey,
+			altKey: event.altKey,
+			metaKey: event.metaKey,
+			type: event.type
+		};
 	}
 }
 
