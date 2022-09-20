@@ -105,7 +105,7 @@ EventCallback Logs:
             {
                 if (showAttachCustomKeyEventHandlerLog)
                 {
-                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
                 }
 
                 return true;
@@ -120,7 +120,7 @@ EventCallback Logs:
             {
                 if (showAttachCustomKeyEventHandlerLog)
                 {
-                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
                 }
 
                 // The return value is ignored on Blazor Server, AttachCustomKeyEventHandlerEvaluate is used for handling that
@@ -152,7 +152,7 @@ EventCallback Logs:
 
     private async Task OnKey(KeyboardEventArgs args)
     {
-        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): {JsonSerializer.Serialize<KeyboardEventArgs>(args)}");
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
     }
 
     private async Task OnLineFeed()
