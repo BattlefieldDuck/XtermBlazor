@@ -152,7 +152,8 @@ EventCallback Logs:
 
     private async Task OnKey(KeyboardEventArgs args)
     {
-        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
+        var local = args;
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(local)}");
     }
 
     private async Task OnLineFeed()
