@@ -17,7 +17,7 @@ jobs:
         dotnet-version: '6.0.x'
         source-url: https://nuget.pkg.github.com/XtermBlazor/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Setup node
       uses: actions/setup-node@v2
       with:
@@ -27,4 +27,4 @@ jobs:
     - name: Create the package
       run: dotnet pack XtermBlazor -c Release
     - name: Publish the package to GPR
-      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg
+      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN
