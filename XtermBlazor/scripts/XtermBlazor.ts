@@ -76,6 +76,14 @@ class XtermBlazor {
 	}
 
 	/**
+	 * Register Addons
+	 * @param addons
+	 */
+	registerAddons(addons: { [id: string]: ITerminalAddon }) {
+		Object.keys(addons).forEach(addonId => this.registerAddon(addonId, addons[addonId]));
+	}
+
+	/**
 	 * Dispose Terminal
 	 * @param id
 	 */

@@ -2,7 +2,7 @@
 
 Brings xterm.js to Blazor
 
-Live Demo: [https://xtermblazor.project.tatlead.com](https://xtermblazor.project.tatlead.com)
+Live Demo: [https://xtermblazor.pages.dev](https://xtermblazor.pages.dev)
 
 ## Demo
 - [XtermBlazor.Demo.Server](/XtermBlazor.Demo.Server/Pages/Index.razor)
@@ -77,10 +77,10 @@ To use `xterm-addon-fit` addon, you need to add the following to your HTML body 
 
 ```html
 <!-- xterm-addon-fit CDN -->
-<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
 
 <!-- Register addon to XtermBlazor -->
-<script>window.XtermBlazor.registerAddon("xterm-addon-fit", new window.FitAddon.FitAddon());</script>
+<script>XtermBlazor.registerAddons({"xterm-addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
 ### Usage with addons
