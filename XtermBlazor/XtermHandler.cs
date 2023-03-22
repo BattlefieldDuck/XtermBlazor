@@ -34,6 +34,17 @@ namespace XtermBlazor
         }
 
         /// <summary>
+        /// Adds an event listener for when the terminal is rendered.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [JSInvokable]
+        public static Task OnFirstRender(string id)
+        {
+            return GetTerminalById(id)?.OnFirstRender.InvokeAsync() ?? Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Adds an event listener for when a binary event fires. This is used to
         /// enable non UTF-8 conformant binary messages to be sent to the backend.
         /// Currently this is only used for a certain type of mouse reports that

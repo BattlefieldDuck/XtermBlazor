@@ -64,6 +64,9 @@ class XtermBlazor {
 			addons: addons,
 			customKeyEventHandler: undefined,
 		});
+
+		// Invoke OnFirstRender
+		DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnFirstRender', id);
 	}
 
 	/**

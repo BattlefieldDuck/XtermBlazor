@@ -168,8 +168,6 @@ namespace XtermBlazor
                 await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options, AddonIds);
 
                 IsRendered = true;
-
-                await OnFirstRender.InvokeAsync();
             }
         }
 
@@ -281,7 +279,7 @@ namespace XtermBlazor
         /// <returns></returns>
         public ValueTask<bool> HasSelection()
         {
-           return JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.hasSelection", Id);
+            return JSRuntime.InvokeAsync<bool>($"{NAMESPACE_PREFIX}.hasSelection", Id);
         }
 
         /// <summary>
