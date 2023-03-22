@@ -17,11 +17,11 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
-        source-url: https://nuget.pkg.github.com/XtermBlazor/index.json
+        source-url: https://nuget.pkg.github.com/BattlefieldDuck/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Setup node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: '14'
     - name: Build
