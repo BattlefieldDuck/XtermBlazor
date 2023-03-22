@@ -3,6 +3,8 @@ name: Publish Dotnet Package (GPR)
 on:
   release:
     types: [created]
+    
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -27,4 +29,4 @@ jobs:
     - name: Create the package
       run: dotnet pack XtermBlazor -c Release
     - name: Publish the package to GPR
-      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN
+      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg --api-key $NUGET_AUTH_TOKEN
