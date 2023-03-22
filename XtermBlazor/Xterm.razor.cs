@@ -44,6 +44,18 @@ namespace XtermBlazor
         [Parameter]
         public string[] AddonIds { get; set; } = Array.Empty<string>();
 
+        /// <summary>
+        /// User class names, separated by space.
+        /// </summary>
+        [Parameter]
+        public string Class { get; set; } = string.Empty;
+
+        /// <summary>
+        /// User styles, applied on top of the component's own classes and styles.
+        /// </summary>
+        [Parameter]
+        public string Style { get; set; } = string.Empty;
+
         #region EventCallbacks
         /// <summary>
         /// Adds an event listener for when first rendered.
