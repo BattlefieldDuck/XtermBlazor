@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup .NET 6.0
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '6.0.x'
         source-url: https://nuget.pkg.github.com/XtermBlazor/index.json
@@ -29,4 +29,4 @@ jobs:
     - name: Create the package
       run: dotnet pack XtermBlazor -c Release
     - name: Publish the package to GPR
-      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg --api-key $NUGET_AUTH_TOKEN
+      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg
