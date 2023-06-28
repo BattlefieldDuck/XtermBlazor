@@ -1,6 +1,6 @@
 # XtermBlazor
 
-Brings xterm.js to Blazor
+Brings [xterm.js](https://github.com/xtermjs/xterm.js) to Blazor
 
 Live Demo: [https://xtermblazor.pages.dev](https://xtermblazor.pages.dev)
 
