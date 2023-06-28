@@ -1,4 +1,7 @@
 # XtermBlazor
+[![Dotnet Package](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml/badge.svg)](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml)
+[![NuGet Version](http://img.shields.io/nuget/v/XtermBlazor.svg?style=flat)](https://www.nuget.org/packages/XtermBlazor/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/XtermBlazor.svg)](https://www.nuget.org/packages/XtermBlazor/)
 
 Brings [xterm.js](https://github.com/xtermjs/xterm.js) to Blazor
 
