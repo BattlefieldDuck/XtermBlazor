@@ -156,6 +156,21 @@ namespace XtermBlazor
         public int? LineHeight { get; set; }
 
         /// <summary>
+        /// The handler for OSC 8 hyperlinks. Links will use the `confirm` browser
+        /// API with a strongly worded warning if no link handler is set.
+        /// 
+        /// When setting this, consider the security of users opening these links,
+        /// at a minimum there should be a tooltip or a prompt when hovering or
+        /// activating the link respectively.An example of what might be possible is
+        /// a terminal app writing link in the form `javascript:...` that runs some
+        /// javascript, a safe approach to prevent that is to validate the link
+        /// starts with http(s)://.
+        /// </summary>
+        // [JsonPropertyName("linkHandler")]
+        // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        // public LinkHandler? LinkHandler { get; set; }
+
+        /// <summary>
         /// What log level to use. The default is 'info'
         /// </summary>
         [JsonPropertyName("logLevel")]
@@ -240,6 +255,14 @@ namespace XtermBlazor
         public int? Scrollback { get; set; }
 
         /// <summary>
+        /// Whether to scroll to the bottom whenever there is some user input. The
+        /// default is true.
+        /// </summary>
+        [JsonPropertyName("scrollOnUserInput")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? ScrollOnUserInput { get; set; }
+
+        /// <summary>
         /// The scrolling speed multiplier used for adjusting normal scrolling speed.
         /// </summary>
         [JsonPropertyName("scrollSensitivity")]
@@ -263,16 +286,43 @@ namespace XtermBlazor
         /// <summary>
         /// Whether "Windows mode" is enabled. Because Windows backends winpty and
         /// conpty operate by doing line wrapping on their side, xterm.js does not
-        /// have access to wrapped lines. When Windows mode is enabled the following
-        /// changes will be in effect:<br />
-        /// <br /><br />
-        /// - Reflow is disabled.<br />
+        /// have access to wrapped lines.When Windows mode is enabled the following
+        /// changes will be in effect:
+        /// 
+        /// - Reflow is disabled.
         /// - Lines are assumed to be wrapped if the last character of the line is
         ///   not whitespace.
+        /// 
+        /// When using conpty on Windows 11 version >= 21376, it is recommended to
+        /// disable this because native text wrapping sequences are output correctly
+        /// thanks to https://github.com/microsoft/terminal/issues/405
+        /// 
+        /// @deprecated Use {@link windowsPty}. This value will be ignored if
+        /// windowsPty is set.
         /// </summary>
         [JsonPropertyName("windowsMode")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? WindowsMode { get; set; }
+
+        /// <summary>
+        /// Compatibility information when the pty is known to be hosted on Windows.
+        /// Setting this will turn on certain heuristics/workarounds depending on the
+        /// values:
+        /// 
+        /// - `if (backend !== undefined || buildNumber !== undefined)`
+        ///   - When increasing the rows in the terminal, the amount increased into
+        ///     the scrollback. This is done because ConPTY does not behave like
+        ///     expect scrollback to come back into the viewport, instead it makes
+        ///     empty rows at of the viewport. Not having this behavior can result in
+        ///     missing data as the rows get replaced.
+        /// - `if !(backend === 'conpty' and buildNumber >= 21376)`
+        ///   - Reflow is disabled
+        ///   - Lines are assumed to be wrapped if the last character of the line is
+        ///     not whitespace.
+        /// </summary>
+        [JsonPropertyName("windowsPty")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public WindowsPty? WindowsPty { get; set; }
 
         /// <summary>
         /// A string containing all characters that are considered word separated by the
@@ -289,6 +339,14 @@ namespace XtermBlazor
         //[JsonPropertyName("windowOptions")]
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         //public WindowOptions? WindowOptions { get; set; }
+
+        /// <summary>
+        /// The width, in pixels, of the canvas for the overview ruler. The overview
+        /// ruler will be hidden when not set.
+        /// </summary>
+        [JsonPropertyName("overviewRulerWidth")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? OverviewRulerWidth { get; set; }
     }
 
     /// <summary>

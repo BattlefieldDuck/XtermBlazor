@@ -1,7 +1,7 @@
-const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
+import * as CopyPlugin from 'copy-webpack-plugin';
+import * as path from 'path';
 
-module.exports = {
+const config = {
     mode: 'production',
     resolve: {
         extensions: ['.ts', '.js']
@@ -21,7 +21,10 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: path.join(__dirname, './node_modules/xterm/css/xterm.css'), to: path.join(__dirname, '/wwwroot/XtermBlazor.css') }
+                {
+                    from: path.join(__dirname, './node_modules/xterm/css/xterm.css'),
+                    to: path.join(__dirname, '/wwwroot/XtermBlazor.css')
+                }
             ]
         })
     ],
@@ -30,3 +33,5 @@ module.exports = {
         filename: '[name].min.js'
     }
 };
+
+export default config;

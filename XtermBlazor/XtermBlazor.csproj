@@ -17,7 +17,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.8.1</Version>
+    <Version>1.9.0</Version>
     <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm, xtermblazor</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -27,6 +27,10 @@
 
   <ItemGroup>
     <WebpackInputs Include="**\*.ts" Exclude="node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WebpackInputs Remove="webpack.config.ts" />
   </ItemGroup>
   
   <ItemGroup>
