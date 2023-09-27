@@ -86,6 +86,13 @@ namespace XtermBlazor
         public double? CursorWidth { get; set; }
 
         /// <summary>
+        /// The style of the cursor when the terminal is not focused.
+        /// </summary>
+        [JsonPropertyName("cursorInactiveStyle")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public CursorInactiveStyle? CursorInactiveStyle { get; set; }
+
+        /// <summary>
         /// Whether input should be disabled.
         /// </summary>
         [JsonPropertyName("disableStdin")]
@@ -142,6 +149,15 @@ namespace XtermBlazor
         public string? FontWeightBold { get; set; }
 
         /// <summary>
+        /// Whether to ignore the bracketed paste mode. When true, this will always
+        /// paste without the `\x1b[200~` and `\x1b[201~` sequences, even when the
+        /// shell enables bracketed mode.
+        /// </summary>
+        [JsonPropertyName("ignoreBracketedPasteMode")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? IgnoreBracketedPasteMode { get; set; }
+
+        /// <summary>
         /// The spacing in whole pixels between characters.
         /// </summary>
         [JsonPropertyName("letterSpacing")]
@@ -176,6 +192,13 @@ namespace XtermBlazor
         [JsonPropertyName("logLevel")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public LogLevel? LogLevel { get; set; }
+
+        /// <summary>
+        /// A logger to use instead of `console`.
+        /// </summary>
+        // [JsonPropertyName("logger")]
+        // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        // public Logger Logger { get; set; } = new();
 
         /// <summary>
         /// Whether to treat option as the meta key.
@@ -375,6 +398,43 @@ namespace XtermBlazor
     }
 
     /// <summary>
+    /// The style of the cursor when the terminal is not focused.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+    public enum CursorInactiveStyle
+    {
+        /// <summary>
+        /// Outline
+        /// </summary>
+        [EnumMember(Value = "outline")]
+        Outline,
+
+        /// <summary>
+        /// Block
+        /// </summary>
+        [EnumMember(Value = "block")]
+        Block,
+
+        /// <summary>
+        /// Bar
+        /// </summary>
+        [EnumMember(Value = "bar")]
+        Bar,
+
+        /// <summary>
+        /// Underline
+        /// </summary>
+        [EnumMember(Value = "underline")]
+        Underline,
+
+        /// <summary>
+        /// None
+        /// </summary>
+        [EnumMember(Value = "none")]
+        None
+    }
+
+    /// <summary>
     /// The modifier key hold to multiply scroll speed.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
@@ -411,6 +471,12 @@ namespace XtermBlazor
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LogLevel
     {
+        /// <summary>
+        /// Trace
+        /// </summary>
+        [EnumMember(Value = "trace")]
+        Trace,
+
         /// <summary>
         /// Debug
         /// </summary>
