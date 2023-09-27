@@ -1,4 +1,7 @@
 # XtermBlazor
+
+<img align="right" width="100" height="100" src="https://github.com/BattlefieldDuck/XtermBlazor/assets/29337428/244eb056-4bb1-43a2-85b4-1909034c3ddf">
+
 [![Dotnet Package](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml/badge.svg)](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml)
 [![NuGet Version](http://img.shields.io/nuget/v/XtermBlazor.svg?style=flat)](https://www.nuget.org/packages/XtermBlazor/)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/XtermBlazor.svg)](https://www.nuget.org/packages/XtermBlazor/)
@@ -7,9 +10,10 @@ Brings [xterm.js](https://github.com/xtermjs/xterm.js) to Blazor
 
 Live Demo: [https://xtermblazor.pages.dev](https://xtermblazor.pages.dev)
 
-## Demo
-- [XtermBlazor.Demo.Server](/XtermBlazor.Demo.Server/Pages/Index.razor)
-- [XtermBlazor.Demo.Wasm](/XtermBlazor.Demo.Wasm/Pages/Index.razor)
+## Demo Projects
+
+- [XtermBlazor.Demo.Server](/XtermBlazor.Demo.Server/Pages/Index.razor) (Blazor Server)
+- [XtermBlazor.Demo.Wasm](/XtermBlazor.Demo.Wasm/Pages/Index.razor) (Blazor WebAssembly)
 
 ## Prerequisites
 
