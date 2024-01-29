@@ -6,24 +6,28 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET 6.0
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '6.0.x'
-    - name: Setup node
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    - name: Build
-      run: dotnet build XtermBlazor -c Release
-    - name: Create the package
-      run: dotnet pack XtermBlazor -c Release
-    - name: Publish the package to nuget.org
-      run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Build
+        run: dotnet build XtermBlazor -c Release
+
+      - name: Create the package
+        run: dotnet pack XtermBlazor -c Release
+
+      - name: Publish the package to nuget.org
+        run: dotnet nuget push XtermBlazor/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
