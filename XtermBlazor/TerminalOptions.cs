@@ -20,7 +20,7 @@ namespace XtermBlazor
         /// <summary>
         /// Whether background should support non-opaque color. It must be set before
         /// executing the `Terminal.open()` method and can't be changed later without
-        /// executing it again. Note that enabling this can negatively impact 
+        /// executing it again. Note that enabling this can negatively impact
         /// performance.
         /// </summary>
         [JsonPropertyName("allowTransparency")]
@@ -171,10 +171,11 @@ namespace XtermBlazor
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? LineHeight { get; set; }
 
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// The handler for OSC 8 hyperlinks. Links will use the `confirm` browser
         /// API with a strongly worded warning if no link handler is set.
-        /// 
+        ///
         /// When setting this, consider the security of users opening these links,
         /// at a minimum there should be a tooltip or a prompt when hovering or
         /// activating the link respectively.An example of what might be possible is
@@ -185,6 +186,7 @@ namespace XtermBlazor
         // [JsonPropertyName("linkHandler")]
         // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         // public LinkHandler? LinkHandler { get; set; }
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
         /// <summary>
         /// What log level to use. The default is 'info'
@@ -193,12 +195,14 @@ namespace XtermBlazor
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public LogLevel? LogLevel { get; set; }
 
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// A logger to use instead of `console`.
         /// </summary>
         // [JsonPropertyName("logger")]
         // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         // public Logger Logger { get; set; } = new();
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
         /// <summary>
         /// Whether to treat option as the meta key.
@@ -311,15 +315,15 @@ namespace XtermBlazor
         /// conpty operate by doing line wrapping on their side, xterm.js does not
         /// have access to wrapped lines.When Windows mode is enabled the following
         /// changes will be in effect:
-        /// 
+        ///
         /// - Reflow is disabled.
         /// - Lines are assumed to be wrapped if the last character of the line is
         ///   not whitespace.
-        /// 
+        ///
         /// When using conpty on Windows 11 version >= 21376, it is recommended to
         /// disable this because native text wrapping sequences are output correctly
         /// thanks to https://github.com/microsoft/terminal/issues/405
-        /// 
+        ///
         /// @deprecated Use {@link windowsPty}. This value will be ignored if
         /// windowsPty is set.
         /// </summary>
@@ -331,7 +335,7 @@ namespace XtermBlazor
         /// Compatibility information when the pty is known to be hosted on Windows.
         /// Setting this will turn on certain heuristics/workarounds depending on the
         /// values:
-        /// 
+        ///
         /// - `if (backend !== undefined || buildNumber !== undefined)`
         ///   - When increasing the rows in the terminal, the amount increased into
         ///     the scrollback. This is done because ConPTY does not behave like
@@ -355,6 +359,8 @@ namespace XtermBlazor
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? WordSeparator { get; set; }
 
+
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// Enable various window manipulation and report features.
         /// All features are disabled by default for security reasons.
@@ -362,12 +368,14 @@ namespace XtermBlazor
         //[JsonPropertyName("windowOptions")]
         //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         //public WindowOptions? WindowOptions { get; set; }
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 
         /// <summary>
         /// The width, in pixels, of the canvas for the overview ruler. The overview
         /// ruler will be hidden when not set.
         /// </summary>
         [JsonPropertyName("overviewRulerWidth")]
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? OverviewRulerWidth { get; set; }
     }
