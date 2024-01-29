@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "ms-dotnettools.blazorwasm-companion",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit"
+    ]
+}
