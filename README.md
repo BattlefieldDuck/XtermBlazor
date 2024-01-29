@@ -17,8 +17,10 @@ Live Demo: [https://xtermblazor.pages.dev](https://xtermblazor.pages.dev)
 
 ## Prerequisites
 
-- [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
-- [Node.js](https://nodejs.org/en/download/)
+Before you get started with this project, make sure you have the following software installed on your system:
+
+- **.NET:** You will need .NET 6.0 or later for this project.
+- **Node.js:** This project also requires Node.js version 18 or later.
 
 ## Installation
 
