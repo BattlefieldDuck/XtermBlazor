@@ -120,3 +120,7 @@ To use `xterm-addon-fit` addon, you need to add the following to your HTML body 
     }
 }
 ```
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/BattlefieldDuck/XtermBlazor.svg?variant=adaptive)](https://starchart.cc/BattlefieldDuck/XtermBlazor)
+
