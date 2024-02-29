@@ -44,6 +44,7 @@
     OnCursorMove="@OnCursorMove"
     OnData="@OnData"
     OnKey="@OnKey"
+    OnKeyDataEvent="@OnKeyDataEvent"
     OnLineFeed="@OnLineFeed"
     OnScroll="@OnScroll"
     OnSelectionChange="@OnSelectionChange"
@@ -155,6 +156,11 @@ EventCallback Logs:
     private async Task OnKey(KeyboardEventArgs args)
     {
         await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
+    }
+
+    private async Task OnKeyDataEvent(string key)
+    {
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKeyDataEvent(): Key: {key}, Unicode: {UnicodeHandler.StringToUnicode(key)}");
     }
 
     private async Task OnLineFeed()

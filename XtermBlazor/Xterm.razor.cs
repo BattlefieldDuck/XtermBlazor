@@ -98,6 +98,13 @@ namespace XtermBlazor
         public EventCallback<KeyboardEventArgs> OnKey { get; set; }
 
         /// <summary>
+        /// Adds an event listener for when a key is pressed. The event value contains the
+        /// string that will be sent in the data event
+        /// </summary>
+        [Parameter]
+        public EventCallback<string> OnKeyDataEvent { get; set; }
+
+        /// <summary>
         /// Adds an event listener for when a line feed is added.
         /// </summary>
         [Parameter]

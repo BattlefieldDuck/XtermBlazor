@@ -28,7 +28,10 @@ class XtermBlazor {
         terminal.onBinary((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBinary', id, data));
         terminal.onCursorMove(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnCursorMove', id));
         terminal.onData((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnData', id, data));
-        terminal.onKey((event: { key: string, domEvent: KeyboardEvent }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, this.convertToArgs(event.domEvent)));
+        terminal.onKey((event: { key: string, domEvent: KeyboardEvent }) => {
+            DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, this.convertToArgs(event.domEvent));
+            DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKeyDataEvent', id, event.key);
+        });
         terminal.onLineFeed(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnLineFeed', id));
         terminal.onScroll((newPosition: number) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnScroll', id, newPosition));
         terminal.onSelectionChange(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnSelectionChange', id));

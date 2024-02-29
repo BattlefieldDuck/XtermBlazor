@@ -95,6 +95,18 @@ namespace XtermBlazor
         }
 
         /// <summary>
+        /// Adds an event listener for when a key is pressed.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        [JSInvokable]
+        public static Task OnKeyDataEvent(string id, string key)
+        {
+            return GetTerminalById(id)?.OnKeyDataEvent.InvokeAsync(key) ?? Task.CompletedTask;
+        }
+
+        /// <summary>
         /// Adds an event listener for when a line feed is added.
         /// </summary>
         /// <param name="id"></param>
