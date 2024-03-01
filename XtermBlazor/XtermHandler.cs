@@ -89,21 +89,9 @@ namespace XtermBlazor
         /// <param name="event"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static Task OnKey(string id, KeyboardEventArgs @event)
+        public static Task OnKey(string id, OnKeyEvent @event)
         {
             return GetTerminalById(id)?.OnKey.InvokeAsync(@event) ?? Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Adds an event listener for when a key is pressed.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        [JSInvokable]
-        public static Task OnKeyDataEvent(string id, string key)
-        {
-            return GetTerminalById(id)?.OnKeyDataEvent.InvokeAsync(key) ?? Task.CompletedTask;
         }
 
         /// <summary>
