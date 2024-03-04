@@ -152,10 +152,10 @@ EventCallback Logs:
         await _terminalEvent.WriteLine($"({++_eventId}) OnData(): {data}");
     }
 
-    private async Task OnKey(OnKeyEvent args)
+    private async Task OnKey(KeyEventArgs args)
     {
-        var @event = args.Event;
-        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {@event.CtrlKey} {JsonSerializer.Serialize(args)}");
+        var domEvent = args.DomEvent;
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {domEvent.CtrlKey} {JsonSerializer.Serialize(args)}");
     }
 
     private async Task OnLineFeed()

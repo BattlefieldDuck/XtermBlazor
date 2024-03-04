@@ -6,17 +6,17 @@ namespace XtermBlazor
     /// <summary>
     /// OnKey event data
     /// </summary>
-    public class OnKeyEvent
+    public class KeyEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OnKeyEvent"/> class.
+        /// Initializes a new instance of the <see cref="KeyEventArgs"/> class.
         /// </summary>
         /// <param name="key">The pressed key interpreted by xterm.js</param>
-        /// <param name="event">The keyboard DOM event</param>
-        public OnKeyEvent(string key, KeyboardEventArgs @event)
+        /// <param name="domEvent">The keyboard DOM event</param>
+        public KeyEventArgs(string key, KeyboardEventArgs domEvent)
         {
             Key = key;
-            Event = @event;
+            DomEvent = domEvent;
         }
 
         /// <summary>
@@ -27,6 +27,6 @@ namespace XtermBlazor
         /// <summary>
         /// he keyboard DOM event
         /// </summary>
-        public KeyboardEventArgs Event { get; set; }
+        public KeyboardEventArgs DomEvent { get; set; }
     }
 }
