@@ -95,7 +95,7 @@ namespace XtermBlazor
         /// triggered it.
         /// </summary>
         [Parameter]
-        public EventCallback<KeyboardEventArgs> OnKey { get; set; }
+        public EventCallback<KeyEventArgs> OnKey { get; set; }
 
         /// <summary>
         /// Adds an event listener for when a line feed is added.
