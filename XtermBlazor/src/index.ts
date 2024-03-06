@@ -95,7 +95,7 @@ class XtermBlazor {
    */
   disposeTerminal(id: string) {
     this._terminals.get(id)?.terminal.dispose();
-    this._terminals.delete(id);
+    return this._terminals.delete(id);
   }
 
   // Xterm Functions
@@ -134,7 +134,8 @@ class XtermBlazor {
    * The function retrieves the terminal instance using the provided id, then retrieves the addon using the addonId. It then invokes the specified function on the addon with any additional arguments.
    */
   invokeAddonFunction(id: string, addonId: string, functionName: string) {
-    return this.getTerminalById(id).addons.get(addonId)[functionName](...arguments[3]);
+    const addon: { [key: string]: any } = this.getTerminalById(id).addons.get(addonId);
+    return addon[functionName](...arguments[3]);
   }
 
   /**
@@ -164,9 +165,9 @@ class XtermBlazor {
     const keyboardEvent = {
       ...Object.entries(Object.getOwnPropertyDescriptors(KeyboardEvent.prototype))
         .filter(([_, descriptor]) => typeof descriptor.get === 'function')
-        .reduce((acc, [key, _]) => {
+        .reduce((acc: { [key: string]: any }, [key, _]) => {
           // Assign each property from the event to the corresponding key in the 'acc' object
-          acc[key] = event[key];
+          acc[key] = event[key as keyof KeyboardEvent];
           return acc;
         }, {}), ...{ type: event.type }
     };
