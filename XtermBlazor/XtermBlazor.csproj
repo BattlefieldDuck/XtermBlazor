@@ -17,12 +17,13 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.10.2</Version>
+    <Version>2.0.0</Version>
     <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm, xtermblazor</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <LangVersion>12.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="SourceLink">
@@ -35,14 +36,6 @@
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <WebpackInputs Include="**\*.ts" Exclude="node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <WebpackInputs Remove="webpack.config.ts" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
@@ -79,27 +72,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="package-lock.json">
-      <Pack>False</Pack>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="package.json">
-      <Pack>False</Pack>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Update="tsconfig.json">
-      <Pack>False</Pack>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
+    <None Remove="src\**\*" />
   </ItemGroup>
 
-  <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
+  <ItemGroup>
+    <WebpackInputs Include="**\*.ts" Exclude="src\node_modules\**" />
+  </ItemGroup>
+
+  <Target Name="EnsureNpmRestored" Condition="!Exists('src/node_modules')">
     <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec Command="npm install" />
+    <Exec WorkingDirectory="src" Command="npm install" />
   </Target>
 
   <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="wwwroot\XtermBlazor.min.js" DependsOnTargets="EnsureNpmRestored">
-    <Exec Command="npm run build" />
+    <Exec WorkingDirectory="src" Command="npm run build" />
   </Target>
 
 </Project>

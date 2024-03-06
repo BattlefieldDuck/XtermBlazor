@@ -6,42 +6,43 @@ using System.Threading.Tasks;
 namespace XtermBlazor
 {
     /// <summary>
-    /// Xterm Handler
+    /// Handles operations related to Xterm terminals.
     /// </summary>
     public static class XtermHandler
     {
-        private static readonly Dictionary<string, Xterm> _terminals = new();
+        /// <summary>
+        /// Stores all the Xterm terminals with their IDs as keys.
+        /// </summary>
+        private static readonly Dictionary<string, Xterm> _terminals = [];
 
         /// <summary>
-        /// Register Terminal
+        /// Registers a new Xterm terminal.
         /// </summary>
-        /// <param name="terminal"></param>
+        /// <param name="terminal">The Xterm terminal to register.</param>
         public static void RegisterTerminal(Xterm terminal)
         {
             _terminals[terminal.Id] = terminal;
         }
 
         /// <summary>
-        /// Dispose Terminal
+        /// Removes an Xterm terminal based on its ID.
         /// </summary>
-        /// <param name="id"></param>
-        public static void DisposeTerminal(string id)
+        /// <param name="id">The ID of the Xterm terminal to remove.</param>
+        /// <returns>True if the terminal was successfully removed; false otherwise.</returns>
+        public static bool RemoveTerminal(string id)
         {
-            if (_terminals.ContainsKey(id))
-            {
-                _terminals.Remove(id);
-            }
+            return _terminals.Remove(id);
         }
 
         /// <summary>
-        /// Adds an event listener for when the terminal is rendered.
+        /// Adds an event listener that triggers when the terminal is first rendered.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">The ID of the Xterm terminal.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
         [JSInvokable]
         public static Task OnFirstRender(string id)
         {
-            return GetTerminalById(id)?.OnFirstRender.InvokeAsync() ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnFirstRender.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnBinary(string id, string data)
         {
-            return GetTerminalById(id)?.OnBinary.InvokeAsync(data) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnBinary.InvokeAsync(data) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnCursorMove(string id)
         {
-            return GetTerminalById(id)?.OnCursorMove.InvokeAsync() ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnCursorMove.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -79,19 +80,19 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnData(string id, string data)
         {
-            return GetTerminalById(id)?.OnData.InvokeAsync(data) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnData.InvokeAsync(data) ?? Task.CompletedTask;
         }
 
         /// <summary>
         /// Adds an event listener for when a key is pressed.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="domEvent"></param>
+        /// <param name="event"></param>
         /// <returns></returns>
         [JSInvokable]
-        public static Task OnKey(string id, KeyEventArgs domEvent)
+        public static Task OnKey(string id, KeyEventArgs @event)
         {
-            return GetTerminalById(id)?.OnKey.InvokeAsync(domEvent) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnKey.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnLineFeed(string id)
         {
-            return GetTerminalById(id)?.OnLineFeed.InvokeAsync() ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnLineFeed.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnScroll(string id, int newPosition)
         {
-            return GetTerminalById(id)?.OnScroll.InvokeAsync(newPosition) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnScroll.InvokeAsync(newPosition) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnSelectionChange(string id)
         {
-            return GetTerminalById(id)?.OnSelectionChange.InvokeAsync() ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnSelectionChange.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnRender(string id, RenderEventArgs @event)
         {
-            return GetTerminalById(id)?.OnRender.InvokeAsync(@event) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnRender.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnResize(string id, ResizeEventArgs @event)
         {
-            return GetTerminalById(id)?.OnResize.InvokeAsync(@event) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnResize.InvokeAsync(@event) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnTitleChange(string id, string title)
         {
-            return GetTerminalById(id)?.OnTitleChange.InvokeAsync(title) ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnTitleChange.InvokeAsync(title) ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace XtermBlazor
         [JSInvokable]
         public static Task OnBell(string id)
         {
-            return GetTerminalById(id)?.OnBell.InvokeAsync() ?? Task.CompletedTask;
+            return GetTerminal(id)?.OnBell.InvokeAsync() ?? Task.CompletedTask;
         }
 
         /// <summary>
@@ -184,10 +185,10 @@ namespace XtermBlazor
         [JSInvokable]
         public static bool AttachCustomKeyEventHandler(string id, KeyboardEventArgs @event)
         {
-            return GetTerminalById(id)?.CustomKeyEventHandler.Invoke(@event) ?? true;
+            return GetTerminal(id)?.CustomKeyEventHandler.Invoke(@event) ?? true;
         }
 
-        private static Xterm? GetTerminalById(string id)
+        private static Xterm? GetTerminal(string id)
         {
             return _terminals.ContainsKey(id) ? _terminals[id] : null;
         }

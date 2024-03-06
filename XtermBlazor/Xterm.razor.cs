@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace XtermBlazor
@@ -13,8 +14,16 @@ namespace XtermBlazor
     {
         private const string NAMESPACE_PREFIX = nameof(XtermBlazor);
 
+        private readonly Dictionary<string, XtermAddon> _xtermAddons = [];
+
         [Inject]
         internal IJSRuntime JSRuntime { get; set; } = default!;
+
+        /// <summary>
+        /// Terminal id. This defaults to ElementReference.Id.
+        /// </summary>
+        [Parameter]
+        public string Id { get; set; } = string.Empty;
 
         /// <summary>
         /// Represents a reference to a rendered element.
@@ -33,16 +42,10 @@ namespace XtermBlazor
         public TerminalOptions Options { get; set; } = new();
 
         /// <summary>
-        /// Terminal id. This defaults to ElementReference.Id.
+        /// A HashSet containing addons that will be loaded and used.
         /// </summary>
         [Parameter]
-        public string Id { get; set; } = string.Empty;
-
-        /// <summary>
-        /// An array containing addon Ids that will be loaded and used.
-        /// </summary>
-        [Parameter]
-        public string[] AddonIds { get; set; } = Array.Empty<string>();
+        public HashSet<string> Addons { get; set; } = [];
 
         /// <summary>
         /// User class names, separated by space.
@@ -157,17 +160,24 @@ namespace XtermBlazor
         {
             if (firstRender)
             {
-                // The ElementReference is only used in OnAfterRenderAsync and not in any earlier lifecycle method because there's no JavaScript element until after the component is rendered.
-                // https://docs.microsoft.com/en-us/aspnet/core/blazor/components/lifecycle?view=aspnetcore-6.0
-
-                // Use ElementReference.Id if original Id
+                // Assign ElementReference.Id to Id if the original Id is null or empty
                 Id = string.IsNullOrEmpty(Id) ? ElementReference.Id : Id;
 
+                // The ElementReference is only used in OnAfterRenderAsync and not in any earlier lifecycle method because there's no JavaScript element until after the component is rendered.
+                // https://docs.microsoft.com/en-us/aspnet/core/blazor/components/lifecycle?view=aspnetcore-6.0
                 XtermHandler.RegisterTerminal(this);
 
-                await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options, AddonIds);
+                // Activate the addons
+                foreach (string addonId in Addons)
+                {
+                    _xtermAddons.Add(addonId, new XtermAddon(this, addonId));
+                }
+
+                await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.registerTerminal", Id, ElementReference, Options, Addons);
 
                 IsRendered = true;
+
+                await OnFirstRender.InvokeAsync();
             }
         }
 
@@ -196,9 +206,9 @@ namespace XtermBlazor
         /// </summary>
         /// <remarks>
         /// Note: The return boolean of <c>customKeyEventHandler</c> is ignored on Blazor Server.
-        /// If you wish to pass the return value to xterm.js, 
-        /// please use <see cref="AttachCustomKeyEventHandlerEvaluate"/> instead.
-        /// </remarks> 
+        /// If you wish to pass the return value to xterm.js,
+        /// please use <see cref="SetCustomKeyEventHandler"/> instead.
+        /// </remarks>
         /// <param name="customKeyEventHandler">
         /// The custom KeyboardEvent handler to attach.
         /// This is a function that takes a KeyboardEvent, allowing consumers to stop
@@ -211,7 +221,7 @@ namespace XtermBlazor
         }
 
         /// <summary>
-        /// Attaches a custom key event handler which is run before keys are
+        /// Sets a custom key event handler which is run before keys are
         /// processed, giving consumers of xterm.js ultimate control as to what keys
         /// should be processed by the terminal and what keys should not.
         /// </summary>
@@ -225,7 +235,7 @@ namespace XtermBlazor
         /// whether the event should be processed by xterm.js.
         /// </param>
         /// <returns></returns>
-        public ValueTask AttachCustomKeyEventHandlerEvaluate(string customKeyEventHandler = "function (event) { return true; }")
+        public ValueTask SetCustomKeyEventHandler(string customKeyEventHandler = "function (event) { return true; }")
         {
             return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}._terminals.get('{Id}').customKeyEventHandler = {customKeyEventHandler}");
         }
@@ -466,37 +476,29 @@ namespace XtermBlazor
         }
 
         /// <summary>
-        /// Invokes the specified addon function asynchronously.
+        /// Retrieves the XtermAddon instance associated with the specified addon ID.
         /// </summary>
-        /// <param name="addonId">Addon Id</param>
-        /// <param name="functionName">The function name that will be invoked</param>
-        /// <param name="args">The function arguments</param>
-        /// <returns></returns>
-        public ValueTask<T> InvokeAddonFunctionAsync<T>(string addonId, string functionName, params object[] args)
+        /// <param name="addonId">The ID of the addon to retrieve.</param>
+        /// <returns>The XtermAddon instance associated with the specified addon ID.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the specified addon is not associated with any terminal.</exception>
+        public XtermAddon Addon(string addonId)
         {
-            return JSRuntime.InvokeAsync<T>($"{NAMESPACE_PREFIX}.invokeAddonFunction", Id, addonId, functionName, args);
-        }
+            if (_xtermAddons.TryGetValue(addonId, out XtermAddon? addon))
+            {
+                return addon;
+            }
 
-        /// <summary>
-        /// Invokes the specified addon function asynchronously.
-        /// </summary>
-        /// <param name="addonId">Addon Id</param>
-        /// <param name="functionName">The function name that will be invoked</param>
-        /// <param name="args">The function arguments</param>
-        /// <returns></returns>
-        public ValueTask InvokeAddonFunctionVoidAsync(string addonId, string functionName, params object[] args)
-        {
-            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.invokeAddonFunction", Id, addonId, functionName, args);
+            throw new InvalidOperationException("This addon is not associated with this terminal. Please ensure that the addon is activated on a terminal.");
         }
 
         /// <inheritdoc />
         public async ValueTask DisposeAsync()
         {
+            // Check if the ElementReference.Id is not empty before disposing the terminal
+            // This is necessary because an empty Id may be passed to DisposeAsync
             if (!string.IsNullOrEmpty(Id))
             {
-                XtermHandler.DisposeTerminal(Id);
-
-                ElementReference = default;
+                XtermHandler.RemoveTerminal(Id);
 
                 try
                 {
@@ -504,7 +506,6 @@ namespace XtermBlazor
                     // Possible TaskCanceledException in .NET 5 when using InvokeVoidAsync
                     // System.Threading.Tasks.TaskCanceledException: A task was canceled.
                     // System.AggregateException: Exceptions were encountered while disposing components. (A task was canceled.) (A task was canceled.)
-
                     await JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.disposeTerminal", Id);
                 }
                 catch (Exception ex) when (ex.GetType().Name == "JSDisconnectedException")
