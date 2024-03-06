@@ -30,7 +30,7 @@
     Cols: <input type="number" maxlength="4" size="4" @bind-value="_columns">
     Rows: <input type="number" maxlength="4" size="4" @bind-value="_rows">
     <input type="button" @onclick="Resize" value="Resize()" />
-  
+
     <input type="text" @bind-value="_searchInput">
     <input type="button" @onclick="Search" value="Search()" />
 </div>
@@ -38,7 +38,7 @@
 <Xterm
     @ref="_terminal"
     Options="_options"
-    AddonIds="_addonIds"
+    Addons="_addons"
     OnFirstRender="@OnFirstRender"
     OnBinary="@OnBinary"
     OnCursorMove="@OnCursorMove"
@@ -59,7 +59,7 @@ EventCallback Logs:
 <br />
 <input type="checkbox" @onchange="@((e) => showAttachCustomKeyEventHandlerLog = !showAttachCustomKeyEventHandlerLog)"> Show AttachCustomKeyEventHandler() Log
 
-<Xterm @ref="_terminalEvent" Options="_options2" AddonIds="_addonIds" />
+<Xterm @ref="_terminalEvent" Options="_options2" Addons="_addons" />
 
 @code {
     [Inject]
@@ -78,7 +78,7 @@ EventCallback Logs:
         },
     };
 
-    private string[] _addonIds = new string[]
+    private HashSet<string> _addons = new HashSet<string>()
     {
         "xterm-addon-fit",
         "xterm-addon-search",
@@ -107,7 +107,7 @@ EventCallback Logs:
             {
                 if (showAttachCustomKeyEventHandlerLog)
                 {
-                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
                 }
 
                 return true;
@@ -116,13 +116,13 @@ EventCallback Logs:
         else
         {
             // Blazor Server
-            await _terminal.AttachCustomKeyEventHandlerEvaluate("(event) => true");
+            await _terminal.SetCustomKeyEventHandler("(event) => true");
 
             _terminal.AttachCustomKeyEventHandler((args) =>
             {
                 if (showAttachCustomKeyEventHandlerLog)
                 {
-                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): Key: {args.Key}, Ctrl: {args.CtrlKey} {JsonSerializer.Serialize(args)}");
+                    _terminalEvent.WriteLine($"({++_eventId}) AttachCustomKeyEventHandler(): {JsonSerializer.Serialize(args)}");
                 }
 
                 // The return value is ignored on Blazor Server, AttachCustomKeyEventHandlerEvaluate is used for handling that
@@ -130,8 +130,8 @@ EventCallback Logs:
             });
         }
 
-        await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
-        await _terminalEvent.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
+        await _terminal.Addon("xterm-addon-fit").InvokeVoidAsync("fit");
+        await _terminalEvent.Addon("xterm-addon-fit").InvokeVoidAsync("fit");
 
         _columns = await _terminal.GetColumns();
         _rows = await _terminal.GetRows();
@@ -154,8 +154,7 @@ EventCallback Logs:
 
     private async Task OnKey(KeyEventArgs args)
     {
-        var domEvent = args.DomEvent;
-        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): Key: {args.Key}, Ctrl: {domEvent.CtrlKey} {JsonSerializer.Serialize(args)}");
+        await _terminalEvent.WriteLine($"({++_eventId}) OnKey(): {JsonSerializer.Serialize(args)}");
     }
 
     private async Task OnLineFeed()
@@ -246,7 +245,7 @@ EventCallback Logs:
 
     private async Task Search(MouseEventArgs args)
     {
-        bool searchSuccess = await _terminal.InvokeAddonFunctionAsync<bool>("xterm-addon-search", "findNext", _searchInput);
+        bool searchSuccess = await _terminal.Addon("xterm-addon-search").InvokeAsync<bool>("findNext", _searchInput);
         await _terminalEvent.WriteLine($"({++_eventId}) Search(): {searchSuccess}");
     }
 

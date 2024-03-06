@@ -17,7 +17,7 @@
     <link href="css/site.css" rel="stylesheet" />
     <link href="XtermBlazor.Demo.Server.styles.css" rel="stylesheet" />
 
-    <link href="_content/XtermBlazor/XtermBlazor.css" rel="stylesheet" />
+    <link href="_content/XtermBlazor/XtermBlazor.min.css" rel="stylesheet" />
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
@@ -33,12 +33,12 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
-
-    <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-search@0.11.0/lib/xterm-addon-search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.8.0/lib/xterm-addon-web-links.min.js"></script>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
     <script>
         XtermBlazor.registerAddons({
             "xterm-addon-fit": new FitAddon.FitAddon(),
