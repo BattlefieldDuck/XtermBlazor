@@ -16,6 +16,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "npm"
-    directory: "/XtermBlazor"
+    directory: "/XtermBlazor/src"
     schedule:
       interval: "daily"
