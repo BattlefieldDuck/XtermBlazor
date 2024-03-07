@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <WebpackInputs Include="**\*.ts" Exclude="src\node_modules\**" />
+    <WebpackInputs Include="src\**\*.ts" Exclude="src\node_modules\**" />
   </ItemGroup>
 
   <Target Name="EnsureNpmRestored" Condition="!Exists('src/node_modules')">

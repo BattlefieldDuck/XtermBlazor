@@ -84,10 +84,26 @@ Xterm supports [Addons](https://github.com/xtermjs/xterm.js/tree/master/addons)
 
 To use `@xterm/addon-fit` addon, you need to add the following to your HTML body section either `index.html` or `_Host.cshtml`.
 
+Blazor WebAssembly `index.html`
 ```html
-<!-- Add addon-fit.min.js before XtermBlazor.min.js -->
+<!-- Add addon-fit.min.js before blazor.webassembly.js and XtermBlazor.min.js -->
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
 
+<script src="_framework/blazor.webassembly.js"></script>
+<script>navigator.serviceWorker.register('service-worker.js');</script>
+
+<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
+
+<!-- Register addon to XtermBlazor -->
+<script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
+```
+
+Blazor Server `_Host.cshtml`
+```html
+<!-- Add addon-fit.min.js before blazor.server.js and XtermBlazor.min.js -->
+<script src="https://cdn.jsdelivr.net/npm/@@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
+
+<script src="_framework/blazor.server.js"></script>
 <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 
 <!-- Register addon to XtermBlazor -->
