@@ -45,7 +45,7 @@ After the package is added, you need to add the following in your `_Imports.razo
 Add the following to your HTML head section, it's either `index.html` or `_Host.cshtml` depending on whether you're running WebAssembly or Server.
 
 ```html
-<link href="_content/XtermBlazor/XtermBlazor.css" rel="stylesheet" />
+<link href="_content/XtermBlazor/XtermBlazor.min.css" rel="stylesheet" />
 ```
 
 In the HTML body section of either `index.html` or `_Host.cshtml` add this:
@@ -71,7 +71,7 @@ In the HTML body section of either `index.html` or `_Host.cshtml` add this:
             Background = "#17615e",
         },
     };
-    
+
     private async Task OnFirstRender()
     {
         await _terminal.WriteLine("Hello World");
@@ -85,8 +85,10 @@ Xterm supports [Addons](https://github.com/xtermjs/xterm.js/tree/master/addons)
 To use `xterm-addon-fit` addon, you need to add the following to your HTML body section either `index.html` or `_Host.cshtml`.
 
 ```html
-<!-- xterm-addon-fit CDN -->
+<!-- Add xterm-addon-fit.min.js before XtermBlazor.min.js -->
 <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
+
+<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 
 <!-- Register addon to XtermBlazor -->
 <script>XtermBlazor.registerAddons({"xterm-addon-fit": new FitAddon.FitAddon()});</script>
@@ -105,22 +107,27 @@ To use `xterm-addon-fit` addon, you need to add the following to your HTML body 
         CursorBlink = true,
         CursorStyle = CursorStyle.Bar,
     };
-    
+
     private string[] _addonIds = new string[]
     {
         "xterm-addon-fit",
     };
-    
+
     private async Task OnFirstRender()
     {
         // Invoke fit() function
         await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
-        
+
         await _terminal.WriteLine("Hello World");
     }
 }
 ```
 
+## Contributing
+Contributions are welcome! Please feel free to submit pull requests or open issues.
+
+## License
+XtermBlazor is licensed under the MIT License. See the `LICENSE` file for more details.
+
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/BattlefieldDuck/XtermBlazor.svg?variant=adaptive)](https://starchart.cc/BattlefieldDuck/XtermBlazor)
-
