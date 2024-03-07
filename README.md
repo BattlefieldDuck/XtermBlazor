@@ -82,22 +82,22 @@ In the HTML body section of either `index.html` or `_Host.cshtml` add this:
 ## Addons
 Xterm supports [Addons](https://github.com/xtermjs/xterm.js/tree/master/addons)
 
-To use `xterm-addon-fit` addon, you need to add the following to your HTML body section either `index.html` or `_Host.cshtml`.
+To use `@xterm/addon-fit` addon, you need to add the following to your HTML body section either `index.html` or `_Host.cshtml`.
 
 ```html
-<!-- Add xterm-addon-fit.min.js before XtermBlazor.min.js -->
+<!-- Add addon-fit.min.js before XtermBlazor.min.js -->
 <script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
 
 <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 
 <!-- Register addon to XtermBlazor -->
-<script>XtermBlazor.registerAddons({"xterm-addon-fit": new FitAddon.FitAddon()});</script>
+<script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
 ### Usage with addons
 
 ```razor
-<Xterm @ref="_terminal" Options="_options" AddonIds="_addonIds" OnFirstRender="@OnFirstRender" />
+<Xterm @ref="_terminal" Options="_options" Addons="_addons" OnFirstRender="@OnFirstRender" />
 
 @code {
     private Xterm _terminal;
@@ -108,15 +108,15 @@ To use `xterm-addon-fit` addon, you need to add the following to your HTML body 
         CursorStyle = CursorStyle.Bar,
     };
 
-    private string[] _addonIds = new string[]
+    private HashSet<string> _addons = new HashSet<string>()
     {
-        "xterm-addon-fit",
+        "addon-fit",
     };
 
     private async Task OnFirstRender()
     {
         // Invoke fit() function
-        await _terminal.InvokeAddonFunctionVoidAsync("xterm-addon-fit", "fit");
+        await _terminal.Addon("addon-fit").InvokeVoidAsync("fit");
 
         await _terminal.WriteLine("Hello World");
     }

@@ -80,9 +80,9 @@ EventCallback Logs:
 
     private HashSet<string> _addons = new HashSet<string>()
     {
-        "xterm-addon-fit",
-        "xterm-addon-search",
-        "xterm-addon-web-links",
+        "addon-fit",
+        "addon-search",
+        "addon-web-links",
     };
 
     private TerminalOptions _options2 = new TerminalOptions
@@ -130,8 +130,8 @@ EventCallback Logs:
             });
         }
 
-        await _terminal.Addon("xterm-addon-fit").InvokeVoidAsync("fit");
-        await _terminalEvent.Addon("xterm-addon-fit").InvokeVoidAsync("fit");
+        await _terminal.Addon("addon-fit").InvokeVoidAsync("fit");
+        await _terminalEvent.Addon("addon-fit").InvokeVoidAsync("fit");
 
         _columns = await _terminal.GetColumns();
         _rows = await _terminal.GetRows();
@@ -245,7 +245,7 @@ EventCallback Logs:
 
     private async Task Search(MouseEventArgs args)
     {
-        bool searchSuccess = await _terminal.Addon("xterm-addon-search").InvokeAsync<bool>("findNext", _searchInput);
+        bool searchSuccess = await _terminal.Addon("addon-search").InvokeAsync<bool>("findNext", _searchInput);
         await _terminalEvent.WriteLine($"({++_eventId}) Search(): {searchSuccess}");
     }
 
