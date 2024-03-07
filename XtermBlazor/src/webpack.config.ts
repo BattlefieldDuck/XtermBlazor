@@ -13,13 +13,13 @@ const common: Configuration = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.ts$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
+      }
     ],
   },
   plugins: [
@@ -32,6 +32,10 @@ const common: Configuration = {
       new CssMinimizerPlugin(),
     ],
   },
+  performance: {
+    maxAssetSize: 300000,
+    maxEntrypointSize: 300000,
+  }
 };
 
 export default (env: any, argv: { mode: string; }) => {

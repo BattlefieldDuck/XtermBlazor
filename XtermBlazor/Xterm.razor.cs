@@ -155,6 +155,14 @@ namespace XtermBlazor
         /// </summary>
         public Func<KeyboardEventArgs, bool> CustomKeyEventHandler { get; private set; } = (_) => true;
 
+        /// <summary>
+        /// The custom WheelEvent handler to attach.
+        /// This is a function that takes a WheelEvent,
+        /// allowing consumers to stop propagation and/or prevent the default action.
+        /// The function returns whether the event should be processed by xterm.js.
+        /// </summary>
+        public Func<WheelEventArgs, bool> CustomWheelEventHandler { get; private set; } = (_) => true;
+
         /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -241,6 +249,34 @@ namespace XtermBlazor
         }
 
         /// <summary>
+        /// Attaches a custom wheel event handler which is run before keys are
+        /// processed, giving consumers of xterm.js control over whether to proceed
+        /// or cancel terminal wheel events.
+        /// </summary>
+        /// <param name="customWheelEventHandler">The custom WheelEvent handler to attach.
+        /// This is a function that takes a WheelEvent, allowing consumers to stop
+        /// propagation and/or prevent the default action. The function returns
+        /// whether the event should be processed by xterm.js.</param>
+        public void AttachCustomWheelEventHandler(Func<WheelEventArgs, bool> customWheelEventHandler)
+        {
+            CustomWheelEventHandler = customWheelEventHandler;
+        }
+
+        /// <summary>
+        ///  Sets a custom wheels event handler which is run before keys are
+        /// processed, giving consumers of xterm.js control over whether to proceed
+        /// or cancel terminal wheel events.
+        /// </summary>
+        /// <param name="customWheelEventHandler">The custom WheelEvent handler to attach.
+        /// This is a function that takes a WheelEvent, allowing consumers to stop
+        /// propagation and/or prevent the default action. The function returns
+        /// whether the event should be processed by xterm.js.</param>
+        public ValueTask SetCustomWheelEventHandler(string customWheelEventHandler = "function (event) { return true; }")
+        {
+            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}._terminals.get('{Id}').customWheelEventHandler = {customWheelEventHandler}");
+        }
+
+        /// <summary>
         /// Gets the terminal options.
         /// </summary>
         /// <returns></returns>
@@ -273,6 +309,22 @@ namespace XtermBlazor
         public ValueTask Focus()
         {
             return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.focus", Id);
+        }
+
+        /// <summary>
+        /// Input data to application side. The data is treated the same way input
+        /// typed into the terminal would (ie. the onData event will fire).
+        /// </summary>
+        /// <param name="data">The data to forward to the application.</param>
+        /// <param name="wasUserInput">Whether the input is genuine user input. This is true
+        /// by default and triggers additionalbehavior like focus or selection
+        /// clearing. Set this to false if the data sent should not be treated like
+        /// user input would, for example passing an escape sequence to the
+        /// application.</param>
+        /// <returns></returns>
+        public ValueTask Input(string data, bool wasUserInput = true)
+        {
+            return JSRuntime.InvokeVoidAsync($"{NAMESPACE_PREFIX}.input", Id, data, wasUserInput);
         }
 
         /// <summary>

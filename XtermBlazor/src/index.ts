@@ -1,5 +1,5 @@
-import './node_modules/xterm/css/xterm.css';
-import { ITerminalAddon, ITerminalOptions, Terminal } from 'xterm';
+import './node_modules/@xterm/xterm/css/xterm.css';
+import { ITerminalAddon, ITerminalOptions, Terminal } from '@xterm/xterm';
 
 declare var DotNet: any;
 
@@ -7,6 +7,7 @@ interface ITerminalObject {
   terminal: Terminal,
   addons: Map<string, ITerminalAddon>,
   customKeyEventHandler: (event: KeyboardEvent) => boolean
+  customWheelEventHandler: (event: WheelEvent) => boolean
 }
 
 class XtermBlazor {
@@ -46,6 +47,16 @@ class XtermBlazor {
         return this.getTerminalById(id).customKeyEventHandler?.call(event) ?? true;
       }
     });
+    terminal.attachCustomWheelEventHandler((event: WheelEvent) => {
+      try {
+        // Synchronous for Blazor WebAssembly apps only.
+        return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomWheelEventHandler', id, event);
+      } catch {
+        // Asynchronous for both Blazor Server and Blazor WebAssembly apps.
+        DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomWheelEventHandler', id, event);
+        return this.getTerminalById(id).customWheelEventHandler?.call(event) ?? true;
+      }
+    });
 
     // Load and set addons
     const addons = new Map<string, ITerminalAddon>();
@@ -63,6 +74,7 @@ class XtermBlazor {
       terminal: terminal,
       addons: addons,
       customKeyEventHandler: undefined,
+      customWheelEventHandler: undefined
     });
   }
 
@@ -105,6 +117,7 @@ class XtermBlazor {
   setOptions = (id: string, options: ITerminalOptions) => this.getTerminalById(id).terminal.options = options;
   blur = (id: string) => this.getTerminalById(id).terminal.blur();
   focus = (id: string) => this.getTerminalById(id).terminal.focus();
+  input = (id: string, data: string, wasUserInput: boolean) => this.getTerminalById(id).terminal.input(data, wasUserInput);
   resize = (id: string, columns: number, rows: number) => this.getTerminalById(id).terminal.resize(columns, rows);
   hasSelection = (id: string) => this.getTerminalById(id).terminal.hasSelection();
   getSelection = (id: string) => this.getTerminalById(id).terminal.getSelection();

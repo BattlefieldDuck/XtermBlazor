@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Brings xterm.js to Blazor",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development"
@@ -11,7 +11,7 @@
   "author": "BattlefieldDuck",
   "license": "MIT",
   "dependencies": {
-    "xterm": "5.3.0"
+    "@xterm/xterm": "^5.4.0"
   },
   "devDependencies": {
     "css-loader": "^6.10.0",

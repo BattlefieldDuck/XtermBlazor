@@ -99,6 +99,18 @@ namespace XtermBlazor
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? DisableStdin { get; set; }
 
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+        /// <summary>
+        /// A {@link Document} to use instead of the one that xterm.js was attached
+        /// to. The purpose of this is to improve support in multi-window
+        /// applications where HTML elements may be references across multiple
+        /// windows which can cause problems with `instanceof`.
+        /// </summary>
+        // [JsonPropertyName("documentOverride")]
+        // [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        // public object? DocumentOverride { get; set; }
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
+
         /// <summary>
         /// Whether to draw bold text in bright colors. The default is true.
         /// </summary>

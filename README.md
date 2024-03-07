@@ -86,7 +86,7 @@ To use `xterm-addon-fit` addon, you need to add the following to your HTML body 
 
 ```html
 <!-- Add xterm-addon-fit.min.js before XtermBlazor.min.js -->
-<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
 
 <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 
