@@ -1,9 +1,9 @@
-import path from 'path';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import { merge } from 'webpack-merge';
-import { Configuration } from 'webpack';
 import { EsbuildPlugin } from 'esbuild-loader';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
+import { Configuration } from 'webpack';
+import { merge } from 'webpack-merge';
 
 const common: Configuration = {
   output: {

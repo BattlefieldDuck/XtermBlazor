@@ -1,5 +1,5 @@
-import './node_modules/@xterm/xterm/css/xterm.css';
 import { ITerminalAddon, ITerminalOptions, Terminal } from '@xterm/xterm';
+import './node_modules/@xterm/xterm/css/xterm.css';
 
 declare var DotNet: any;
 
