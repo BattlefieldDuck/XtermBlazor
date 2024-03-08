@@ -31,6 +31,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
@@ -44,11 +45,7 @@
   <ItemGroup>
     <None Include="..\LICENSE" Pack="True" PackagePath="\" />
     <None Include="..\README.md" Pack="True" PackagePath="\" />
-    <None Include="icon.png" Pack="True" PackagePath="\"  />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="src\**\*" />
+    <None Include="icon.png" Pack="True" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
