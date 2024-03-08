@@ -245,7 +245,7 @@ namespace XtermBlazor
         /// <returns></returns>
         public ValueTask SetCustomKeyEventHandler(string customKeyEventHandler = "function (event) { return true; }")
         {
-            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}._terminals.get('{Id}').customKeyEventHandler = {customKeyEventHandler}");
+            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}.getTerminalObjectById('{Id}').customKeyEventHandler = {customKeyEventHandler}");
         }
 
         /// <summary>
@@ -253,6 +253,11 @@ namespace XtermBlazor
         /// processed, giving consumers of xterm.js control over whether to proceed
         /// or cancel terminal wheel events.
         /// </summary>
+        /// <remarks>
+        /// Note: The return boolean of <c>customKeyEventHandler</c> is ignored on Blazor Server.
+        /// If you wish to pass the return value to xterm.js,
+        /// please use <see cref="SetCustomWheelEventHandler"/> instead.
+        /// </remarks>
         /// <param name="customWheelEventHandler">The custom WheelEvent handler to attach.
         /// This is a function that takes a WheelEvent, allowing consumers to stop
         /// propagation and/or prevent the default action. The function returns
@@ -263,17 +268,20 @@ namespace XtermBlazor
         }
 
         /// <summary>
-        ///  Sets a custom wheels event handler which is run before keys are
+        /// Sets a custom wheels event handler which is run before keys are
         /// processed, giving consumers of xterm.js control over whether to proceed
         /// or cancel terminal wheel events.
         /// </summary>
+        /// <remarks>
+        /// Note: If your project is using Blazor WebAssembly, you can use <see cref="AttachCustomWheelEventHandler"/> instead.
+        /// </remarks>
         /// <param name="customWheelEventHandler">The custom WheelEvent handler to attach.
         /// This is a function that takes a WheelEvent, allowing consumers to stop
         /// propagation and/or prevent the default action. The function returns
         /// whether the event should be processed by xterm.js.</param>
         public ValueTask SetCustomWheelEventHandler(string customWheelEventHandler = "function (event) { return true; }")
         {
-            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}._terminals.get('{Id}').customWheelEventHandler = {customWheelEventHandler}");
+            return JSRuntime.InvokeVoidAsync("eval", $"{NAMESPACE_PREFIX}.getTerminalObjectById('{Id}').customWheelEventHandler = {customWheelEventHandler}");
         }
 
         /// <summary>

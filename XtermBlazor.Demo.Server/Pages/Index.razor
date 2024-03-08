@@ -26,6 +26,7 @@
     <input type="text" @bind-value="_input">
     <input type="button" @onclick="Write" value="Write()" />
     <input type="button" @onclick="WriteLine" value="WriteLine()" />
+    <input type="button" @onclick="Input" value="Input()" />
 
     Cols: <input type="number" maxlength="4" size="4" @bind-value="_columns">
     Rows: <input type="number" maxlength="4" size="4" @bind-value="_rows">
@@ -200,6 +201,11 @@ EventCallback Logs:
     private async Task WriteLine(MouseEventArgs args)
     {
         await _terminal.WriteLine(_input);
+    }
+
+    private async Task Input(MouseEventArgs args)
+    {
+        await _terminal.Input(_input);
     }
 
     private async Task HasSelection(MouseEventArgs args)

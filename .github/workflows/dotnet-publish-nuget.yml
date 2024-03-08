@@ -16,12 +16,20 @@ jobs:
         with:
           dotnet-version: 8
 
-      - name: Setup node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Build
+      - name: Install Node.js dependencies
+        run: npm install
+        working-directory: XtermBlazor/src
+
+      - name: Build Node.js project
+        run: npm run build
+        working-directory: XtermBlazor/src
+
+      - name: Build .NET project
         run: dotnet build XtermBlazor -c Release
 
       - name: Create the package

@@ -3,6 +3,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { merge } from 'webpack-merge';
 import { Configuration } from 'webpack';
+import { EsbuildPlugin } from 'esbuild-loader';
 
 const common: Configuration = {
   output: {
@@ -16,9 +17,8 @@ const common: Configuration = {
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
-        test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
+        test: /\.[jt]sx?$/,
+        loader: 'esbuild-loader'
       }
     ],
   },
@@ -30,6 +30,9 @@ const common: Configuration = {
   optimization: {
     minimizer: [
       new CssMinimizerPlugin(),
+      new EsbuildPlugin({
+        css: true
+      })
     ],
   },
   performance: {

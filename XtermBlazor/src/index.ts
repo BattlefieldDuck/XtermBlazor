@@ -26,35 +26,35 @@ class XtermBlazor {
     const terminal = new Terminal(options);
 
     // Create Listeners
-    terminal.onBinary((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBinary', id, data));
+    terminal.onBinary(data => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBinary', id, data));
     terminal.onCursorMove(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnCursorMove', id));
-    terminal.onData((data: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnData', id, data));
-    terminal.onKey((event: { key: string, domEvent: KeyboardEvent }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, { Key: event.key, DomEvent: this.parseKeyboardEvent(event.domEvent) }));
+    terminal.onData(data => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnData', id, data));
+    terminal.onKey(({ key, domEvent }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnKey', id, { Key: key, DomEvent: this.parseKeyboardEvent(domEvent) }));
     terminal.onLineFeed(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnLineFeed', id));
-    terminal.onScroll((newPosition: number) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnScroll', id, newPosition));
+    terminal.onScroll(newPosition => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnScroll', id, newPosition));
     terminal.onSelectionChange(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnSelectionChange', id));
-    terminal.onRender((event: { start: number, end: number }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnRender', id, event));
-    terminal.onResize((event: { cols: number, rows: number }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnResize', id, { columns: event.cols, rows: event.rows }));
-    terminal.onTitleChange((title: string) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id, title));
+    terminal.onRender(event => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnRender', id, event));
+    terminal.onResize(({ cols, rows }) => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnResize', id, { columns: cols, rows: rows }));
+    terminal.onTitleChange(title => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnTitleChange', id, title));
     terminal.onBell(() => DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'OnBell', id));
-    terminal.attachCustomKeyEventHandler((event: KeyboardEvent) => {
+    terminal.attachCustomKeyEventHandler(event => {
       try {
         // Synchronous for Blazor WebAssembly apps only.
         return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, this.parseKeyboardEvent(event));
       } catch {
         // Asynchronous for both Blazor Server and Blazor WebAssembly apps.
         DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, this.parseKeyboardEvent(event));
-        return this.getTerminalById(id).customKeyEventHandler?.call(event) ?? true;
+        return this.getTerminalObjectById(id).customKeyEventHandler?.call(event) ?? true;
       }
     });
-    terminal.attachCustomWheelEventHandler((event: WheelEvent) => {
+    terminal.attachCustomWheelEventHandler(event => {
       try {
         // Synchronous for Blazor WebAssembly apps only.
         return DotNet.invokeMethod(this._ASSEMBLY_NAME, 'AttachCustomWheelEventHandler', id, event);
       } catch {
         // Asynchronous for both Blazor Server and Blazor WebAssembly apps.
         DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomWheelEventHandler', id, event);
-        return this.getTerminalById(id).customWheelEventHandler?.call(event) ?? true;
+        return this.getTerminalObjectById(id).customWheelEventHandler?.call(event) ?? true;
       }
     });
 
@@ -111,32 +111,32 @@ class XtermBlazor {
   }
 
   // Xterm Functions
-  getRows = (id: string) => this.getTerminalById(id).terminal.rows;
-  getCols = (id: string) => this.getTerminalById(id).terminal.cols;
-  getOptions = (id: string) => this.getTerminalById(id).terminal.options;
-  setOptions = (id: string, options: ITerminalOptions) => this.getTerminalById(id).terminal.options = options;
-  blur = (id: string) => this.getTerminalById(id).terminal.blur();
-  focus = (id: string) => this.getTerminalById(id).terminal.focus();
-  input = (id: string, data: string, wasUserInput: boolean) => this.getTerminalById(id).terminal.input(data, wasUserInput);
-  resize = (id: string, columns: number, rows: number) => this.getTerminalById(id).terminal.resize(columns, rows);
-  hasSelection = (id: string) => this.getTerminalById(id).terminal.hasSelection();
-  getSelection = (id: string) => this.getTerminalById(id).terminal.getSelection();
-  getSelectionPosition = (id: string) => this.getTerminalById(id).terminal.getSelectionPosition();
-  clearSelection = (id: string) => this.getTerminalById(id).terminal.clearSelection();
-  select = (id: string, column: number, row: number, length: number) => this.getTerminalById(id).terminal.select(column, row, length);
-  selectAll = (id: string) => this.getTerminalById(id).terminal.selectAll();
-  selectLines = (id: string, start: number, end: number) => this.getTerminalById(id).terminal.selectLines(start, end);
-  scrollLines = (id: string, amount: number) => this.getTerminalById(id).terminal.scrollLines(amount);
-  scrollPages = (id: string, pageCount: number) => this.getTerminalById(id).terminal.scrollPages(pageCount);
-  scrollToTop = (id: string) => this.getTerminalById(id).terminal.scrollToTop();
-  scrollToBottom = (id: string) => this.getTerminalById(id).terminal.scrollToBottom();
-  scrollToLine = (id: string, line: number) => this.getTerminalById(id).terminal.scrollToLine(line);
-  clear = (id: string) => this.getTerminalById(id).terminal.clear();
-  write = (id: string, data: string) => this.getTerminalById(id).terminal.write(data);
-  writeln = (id: string, data: string) => this.getTerminalById(id).terminal.writeln(data);
-  paste = (id: string, data: string) => this.getTerminalById(id).terminal.paste(data);
-  refresh = (id: string, start: number, end: number) => this.getTerminalById(id).terminal.refresh(start, end);
-  reset = (id: string) => this.getTerminalById(id).terminal.reset();
+  getRows = (id: string) => this.getTerminalById(id).rows;
+  getCols = (id: string) => this.getTerminalById(id).cols;
+  getOptions = (id: string) => this.getTerminalById(id).options;
+  setOptions = (id: string, options: ITerminalOptions) => this.getTerminalById(id).options = options;
+  blur = (id: string) => this.getTerminalById(id).blur();
+  focus = (id: string) => this.getTerminalById(id).focus();
+  input = (id: string, data: string, wasUserInput: boolean) => this.getTerminalById(id).input(data, wasUserInput);
+  resize = (id: string, columns: number, rows: number) => this.getTerminalById(id).resize(columns, rows);
+  hasSelection = (id: string) => this.getTerminalById(id).hasSelection();
+  getSelection = (id: string) => this.getTerminalById(id).getSelection();
+  getSelectionPosition = (id: string) => this.getTerminalById(id).getSelectionPosition();
+  clearSelection = (id: string) => this.getTerminalById(id).clearSelection();
+  select = (id: string, column: number, row: number, length: number) => this.getTerminalById(id).select(column, row, length);
+  selectAll = (id: string) => this.getTerminalById(id).selectAll();
+  selectLines = (id: string, start: number, end: number) => this.getTerminalById(id).selectLines(start, end);
+  scrollLines = (id: string, amount: number) => this.getTerminalById(id).scrollLines(amount);
+  scrollPages = (id: string, pageCount: number) => this.getTerminalById(id).scrollPages(pageCount);
+  scrollToTop = (id: string) => this.getTerminalById(id).scrollToTop();
+  scrollToBottom = (id: string) => this.getTerminalById(id).scrollToBottom();
+  scrollToLine = (id: string, line: number) => this.getTerminalById(id).scrollToLine(line);
+  clear = (id: string) => this.getTerminalById(id).clear();
+  write = (id: string, data: string) => this.getTerminalById(id).write(data);
+  writeln = (id: string, data: string) => this.getTerminalById(id).writeln(data);
+  paste = (id: string, data: string) => this.getTerminalById(id).paste(data);
+  refresh = (id: string, start: number, end: number) => this.getTerminalById(id).refresh(start, end);
+  reset = (id: string) => this.getTerminalById(id).reset();
 
   /**
    * This function invokes a specific function of an addon associated with a terminal.
@@ -147,7 +147,7 @@ class XtermBlazor {
    * The function retrieves the terminal instance using the provided id, then retrieves the addon using the addonId. It then invokes the specified function on the addon with any additional arguments.
    */
   invokeAddonFunction(id: string, addonId: string, functionName: string) {
-    const addon: { [key: string]: any } = this.getTerminalById(id).addons.get(addonId);
+    const addon: { [key: string]: any } = this.getTerminalObjectById(id).addons.get(addonId);
     return addon[functionName](...arguments[3]);
   }
 
@@ -158,7 +158,7 @@ class XtermBlazor {
    *
    * The function retrieves the terminal instance from the internal terminals list using the provided id. If no terminal is found, it throws an error.
    */
-  getTerminalById(id: string): ITerminalObject {
+  getTerminalObjectById(id: string): ITerminalObject {
     const terminal = this._terminals.get(id);
 
     if (!terminal) {
@@ -166,6 +166,17 @@ class XtermBlazor {
     }
 
     return terminal;
+  }
+
+  /**
+   * This function retrieves a Terminal instance by its unique identifier.
+   * @param id {string} - The unique identifier for the terminal.
+   * @returns {Terminal} - The Terminal instance associated with the provided id.
+   *
+   * The function retrieves the Terminal instance by calling the `getTerminalObjectById` method with the provided id. If no terminal is found, it throws an error.
+   */
+  getTerminalById(id: string): Terminal {
+    return this.getTerminalObjectById(id).terminal;
   }
 
   /**

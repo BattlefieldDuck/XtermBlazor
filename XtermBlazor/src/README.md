@@ -1,18 +1,33 @@
 # XtermBlazor
 
-XtermBlazor is a Blazor library that integrates the xterm.js terminal emulator into Blazor applications.
+XtermBlazor is a robust Blazor library that seamlessly integrates the xterm.js terminal emulator into Blazor applications, providing a rich and interactive command-line interface experience.
 
-## Scripts Commands
+## Usage
 
-Here are some common npm scripts commands you can use:
+If you make any changes to the `index.ts` file, you'll need to compile the TypeScript files to JavaScript.
 
-- **npm install**: Install all the dependencies listed in `package.json`.
-- **npm run build**: Compile TypeScript files to JavaScript and create `wwwroot/XtermBlazor.min.js` and `wwwroot/XtermBlazor.min.css`
-- **npm run dev**:  Compile TypeScript files to JavaScript in development mode and create `wwwroot/XtermBlazor.js` and `wwwroot/XtermBlazor.css`
+### Install Dependencies
+
+Install all necessary dependencies listed in the `package.json` file by running the following command in your terminal:
+
+```sh
+npm install
+```
+
+### Compile TypeScript Files
+
+Run the following command to compile TypeScript files to JavaScript. This will create `wwwroot/XtermBlazor.min.js` and `wwwroot/XtermBlazor.min.css`:
+
+```sh
+npm run build
+```
 
 ## Contributing
-Contributions are welcome! Please feel free to submit pull requests or open issues.
+
+We welcome contributions from the community! If you're interested in improving XtermBlazor, feel free to submit pull requests or open issues. Your input and feedback are greatly appreciated and will help us continue to improve and enhance the functionality of XtermBlazor.
 
 ## License
-XtermBlazor is licensed under the MIT License. See the `LICENSE` file for more details.
-```
+
+XtermBlazor is licensed under the MIT License. For more details, please refer to the `LICENSE` file included in the repository.
+
+Thank you for your interest in XtermBlazor. We look forward to your contributions and feedback!

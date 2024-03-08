@@ -42,18 +42,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="icon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\LICENSE" Pack="True" PackagePath="\" />
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="icon.png" Pack="True" PackagePath="\"  />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="src\**\*" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
@@ -70,22 +65,5 @@
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="src\**\*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <WebpackInputs Include="src\**\*.ts" Exclude="src\node_modules\**" />
-  </ItemGroup>
-
-  <Target Name="EnsureNpmRestored" Condition="!Exists('src/node_modules')">
-    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec WorkingDirectory="src" Command="npm install" />
-  </Target>
-
-  <Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="wwwroot\XtermBlazor.min.js" DependsOnTargets="EnsureNpmRestored">
-    <Exec WorkingDirectory="src" Command="npm run build" />
-  </Target>
 
 </Project>

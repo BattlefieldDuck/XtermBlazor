@@ -455,3 +455,5 @@ $RECYCLE.BIN/
 
 # XtermBlazor
 XtermBlazor/wwwroot/*
+!XtermBlazor/wwwroot/*.min.css
+!XtermBlazor/wwwroot/*.min.js
