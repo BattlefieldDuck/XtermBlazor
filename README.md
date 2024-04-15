@@ -142,6 +142,8 @@ Blazor Server `_Host.cshtml`
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests or open issues.
 
+![https://github.com/BattlefieldDuck/XtermBlazor/graphs/contributors](https://contrib.rocks/image?repo=BattlefieldDuck/XtermBlazor)
+
 ## License
 XtermBlazor is licensed under the MIT License. See the `LICENSE` file for more details.
 
