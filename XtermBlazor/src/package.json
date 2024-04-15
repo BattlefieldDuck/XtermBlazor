@@ -11,7 +11,7 @@
   "author": "BattlefieldDuck",
   "license": "MIT",
   "dependencies": {
-    "@xterm/xterm": "^5.4.0"
+    "@xterm/xterm": "^5.5.0"
   },
   "devDependencies": {
     "css-loader": "^7.1.1",
