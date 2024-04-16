@@ -249,6 +249,19 @@ namespace XtermBlazor
         public double? MinimumContrastRatio { get; set; }
 
         /// <summary>
+        /// Whether to rescale glyphs horizontally that are a single cell wide but
+        /// have glyphs that would overlap following cell(s). This typically happens
+        /// for ambiguous width characters (eg. the roman numeral characters U+2160+)
+        /// which aren't featured in monospace fonts. Emoji glyphs are never
+        /// rescaled. This is an important feature for achieving GB18030 compliance.
+        /// <br /><br />
+        /// Note that this doesn't work with the DOM renderer. The default is false.
+        /// </summary>
+        [JsonPropertyName("rescaleOverlappingGlyphs")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? RescaleOverlappingGlyphs { get; set; }
+
+        /// <summary>
         /// The type of renderer to use, this allows using the fallback DOM renderer
         /// when canvas is too slow for the environment. The following features do
         /// not work when the DOM renderer is used:

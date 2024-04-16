@@ -92,9 +92,8 @@ Blazor WebAssembly `index.html`
 <script src="_framework/blazor.webassembly.js"></script>
 <script>navigator.serviceWorker.register('service-worker.js');</script>
 
+<!-- Load the XtermBlazor library and register addons -->
 <script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
-
-<!-- Register addon to XtermBlazor -->
 <script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
@@ -104,9 +103,9 @@ Blazor Server `_Host.cshtml`
 <script src="https://cdn.jsdelivr.net/npm/@@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
 
 <script src="_framework/blazor.server.js"></script>
-<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 
-<!-- Register addon to XtermBlazor -->
+<!-- Load the XtermBlazor library and register addons -->
+<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
 <script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
