@@ -188,6 +188,18 @@ namespace XtermBlazor
             return GetTerminal(id)?.CustomKeyEventHandler.Invoke(@event) ?? true;
         }
 
+        /// <summary>
+        /// An event handler before wheel are processed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="event"></param>
+        /// <returns></returns>
+        [JSInvokable]
+        public static bool AttachCustomWheelEventHandler(string id, WheelEventArgs @event)
+        {
+            return GetTerminal(id)?.CustomWheelEventHandler.Invoke(@event) ?? true;
+        }
+
         private static Xterm? GetTerminal(string id)
         {
             return _terminals.ContainsKey(id) ? _terminals[id] : null;
