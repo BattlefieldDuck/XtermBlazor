@@ -13,13 +13,14 @@
     to get incremental builds to work correctly (albeit not as fast as if FastUpToDateCheck did work
     for them) -->
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
-    <Authors>BattlefieldDuck</Authors>
-    <RepositoryUrl>https://github.com/BattlefieldDuck/XtermBlazor</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/BattlefieldDuck/XtermBlazor</PackageProjectUrl>
+    <Authors>aaasoft</Authors>
+    <AssemblyName>Quick.XtermBlazor</AssemblyName>
+    <RepositoryUrl>https://github.com/aaasoft/Quick.XtermBlazor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/aaasoft/Quick.XtermBlazor</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Description>Brings xterm.js to Blazor</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <PackageTags>xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm,
       xtermblazor</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -42,17 +43,17 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.26" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.32" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.20" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>

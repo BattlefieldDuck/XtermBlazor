@@ -11,7 +11,7 @@ interface ITerminalObject {
 }
 
 class XtermBlazor {
-  private readonly _ASSEMBLY_NAME = 'XtermBlazor';
+  private readonly _ASSEMBLY_NAME = 'Quick.XtermBlazor';
   private readonly _terminals = new Map<string, ITerminalObject>();
   private readonly _addonList = new Map<string, ITerminalAddon>();
 

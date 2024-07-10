@@ -1,10 +1,10 @@
-# XtermBlazor
+# Quick.XtermBlazor
 
-<img align="right" width="100" height="100" src="https://github.com/BattlefieldDuck/XtermBlazor/assets/29337428/244eb056-4bb1-43a2-85b4-1909034c3ddf">
+<img align="right" width="100" height="100" src="https://github.com/aaasoft/Quick.XtermBlazor/assets/29337428/244eb056-4bb1-43a2-85b4-1909034c3ddf">
 
-[![Dotnet Package](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml/badge.svg)](https://github.com/BattlefieldDuck/XtermBlazor/actions/workflows/dotnet-package.yml)
-[![NuGet Version](http://img.shields.io/nuget/v/XtermBlazor.svg?style=flat)](https://www.nuget.org/packages/XtermBlazor/)
-[![NuGet Downloads](https://img.shields.io/nuget/dt/XtermBlazor.svg)](https://www.nuget.org/packages/XtermBlazor/)
+[![Dotnet Package](https://github.com/aaasoft/Quick.XtermBlazor/actions/workflows/dotnet-package.yml/badge.svg)](https://github.com/aaasoft/Quick.XtermBlazor/actions/workflows/dotnet-package.yml)
+[![NuGet Version](http://img.shields.io/nuget/v/Quick.XtermBlazor.svg?style=flat)](https://www.nuget.org/packages/Quick.XtermBlazor/)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Quick.XtermBlazor.svg)](https://www.nuget.org/packages/Quick.XtermBlazor/)
 
 Brings [xterm.js](https://github.com/xtermjs/xterm.js) to Blazor
 
@@ -29,7 +29,7 @@ Before you get started with this project, make sure you have the following softw
 Find the package through NuGet Package Manager or install it with following command.
 
 ```sh
-dotnet add package XtermBlazor
+dotnet add package Quick.XtermBlazor
 ```
 
 ### 2. Add Imports
@@ -45,13 +45,13 @@ After the package is added, you need to add the following in your `_Imports.razo
 Add the following to your HTML head section, it's either `index.html` or `_Host.cshtml` depending on whether you're running WebAssembly or Server.
 
 ```html
-<link href="_content/XtermBlazor/XtermBlazor.min.css" rel="stylesheet" />
+<link href="_content/Quick.XtermBlazor/XtermBlazor.min.css" rel="stylesheet" />
 ```
 
 In the HTML body section of either `index.html` or `_Host.cshtml` add this:
 
 ```html
-<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
+<script src="_content/Quick.XtermBlazor/XtermBlazor.min.js"></script>
 ```
 
 ### Basic Usage
@@ -93,7 +93,7 @@ Blazor WebAssembly `index.html`
 <script>navigator.serviceWorker.register('service-worker.js');</script>
 
 <!-- Load the XtermBlazor library and register addons -->
-<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
+<script src="_content/Quick.XtermBlazor/XtermBlazor.min.js"></script>
 <script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
@@ -105,7 +105,7 @@ Blazor Server `_Host.cshtml`
 <script src="_framework/blazor.server.js"></script>
 
 <!-- Load the XtermBlazor library and register addons -->
-<script src="_content/XtermBlazor/XtermBlazor.min.js"></script>
+<script src="_content/Quick.XtermBlazor/XtermBlazor.min.js"></script>
 <script>XtermBlazor.registerAddons({"addon-fit": new FitAddon.FitAddon()});</script>
 ```
 
@@ -141,10 +141,10 @@ Blazor Server `_Host.cshtml`
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests or open issues.
 
-![https://github.com/BattlefieldDuck/XtermBlazor/graphs/contributors](https://contrib.rocks/image?repo=BattlefieldDuck/XtermBlazor)
+![https://github.com/aaasoft/Quick.XtermBlazor/graphs/contributors](https://contrib.rocks/image?repo=aaasoft/Quick.XtermBlazor)
 
 ## License
-XtermBlazor is licensed under the MIT License. See the `LICENSE` file for more details.
+Quick.XtermBlazor is licensed under the MIT License. See the `LICENSE` file for more details.
 
 ## Stargazers over time
-[![Stargazers over time](https://starchart.cc/BattlefieldDuck/XtermBlazor.svg?variant=adaptive)](https://starchart.cc/BattlefieldDuck/XtermBlazor)
+[![Stargazers over time](https://starchart.cc/aaasoft/Quick.XtermBlazor.svg?variant=adaptive)](https://starchart.cc/aaasoft/Quick.XtermBlazor)
