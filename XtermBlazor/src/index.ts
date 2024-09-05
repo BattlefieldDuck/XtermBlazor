@@ -44,7 +44,7 @@ class XtermBlazor {
       } catch {
         // Asynchronous for both Blazor Server and Blazor WebAssembly apps.
         DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomKeyEventHandler', id, this.parseKeyboardEvent(event));
-        return this.getTerminalObjectById(id).customKeyEventHandler?.call(event) ?? true;
+        return this.getTerminalObjectById(id).customKeyEventHandler?.call(terminal, event) ?? true;
       }
     });
     terminal.attachCustomWheelEventHandler(event => {
@@ -54,7 +54,7 @@ class XtermBlazor {
       } catch {
         // Asynchronous for both Blazor Server and Blazor WebAssembly apps.
         DotNet.invokeMethodAsync(this._ASSEMBLY_NAME, 'AttachCustomWheelEventHandler', id, event);
-        return this.getTerminalObjectById(id).customWheelEventHandler?.call(event) ?? true;
+        return this.getTerminalObjectById(id).customWheelEventHandler?.call(terminal, event) ?? true;
       }
     });
 
