@@ -26,14 +26,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Node.js dependencies
-        run: npm install
-        working-directory: XtermBlazor/src
-
-      - name: Build Node.js project
-        run: npm run build
-        working-directory: XtermBlazor/src
-
       - name: Restore .NET dependencies
         run: dotnet restore XtermBlazor
 

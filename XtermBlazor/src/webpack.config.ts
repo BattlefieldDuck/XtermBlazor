@@ -6,58 +6,56 @@ import { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 
 const common: Configuration = {
-  output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, '../wwwroot'),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      },
-      {
-        test: /\.[jt]sx?$/,
-        loader: 'esbuild-loader'
-      }
+    output: {
+        filename: '[name].js',
+        path: path.resolve(__dirname, '../wwwroot'),
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.[jt]sx?$/,
+                loader: 'esbuild-loader'
+            }
+        ],
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+        }),
     ],
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-  ],
-  optimization: {
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new EsbuildPlugin({
-        css: true
-      })
-    ],
-  },
-  performance: {
-    maxAssetSize: 300000,
-    maxEntrypointSize: 300000,
-  }
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+            new EsbuildPlugin({
+                css: true
+            })
+        ],
+    },
+    performance: {
+        maxAssetSize: 300000,
+        maxEntrypointSize: 300000,
+    }
 };
 
-export default (env: any, argv: { mode: string; }) => {
-  if (argv.mode === 'development') {
-    return merge(common, {
-      mode: 'development',
-      devtool: 'inline-source-map',
-      entry: {
-        'XtermBlazor': './index.ts',
-      }
-    });
-  }
+export default (env: { production: boolean }) => {
+    if (env.production) {
+        return merge(common, {
+            mode: 'production',
+            entry: {
+                'XtermBlazor.min': './index.ts',
+            }
+        });
+    }
 
-  if (argv.mode === 'production') {
     return merge(common, {
-      mode: 'production',
-      entry: {
-        'XtermBlazor.min': './index.ts',
-      }
+        mode: 'development',
+        devtool: 'inline-source-map',
+        entry: {
+            'XtermBlazor.min': './index.ts',
+        }
     });
-  }
 };
