@@ -19,7 +19,7 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Description>Brings xterm.js to Blazor</Description>
 		<PackageIcon>icon.png</PackageIcon>
-		<Version>2.1.1</Version>
+		<Version>2.1.2</Version>
 		<PackageTags>
 			xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm,
 			xtermblazor
@@ -76,6 +76,12 @@
 		<Exec Command="npm run build" WorkingDirectory="src" Condition="$(Configuration) == 'Debug'" />
 	</Target>
 
+	<Target Name="NpmClean" BeforeTargets="Clean">
+		<Message Text="Cleaning Built Files" />
+		<Delete Files="@(CompiledWebpackFiles)" />
+		<RemoveDir Directories="$(ProjectDir)src\node_modules" />
+	</Target>
+
 	<ItemGroup>
 		<Content Update="src\**">
 			<Pack>False</Pack>
@@ -96,6 +102,7 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>
