@@ -201,9 +201,7 @@ class XtermBlazor {
 }
 
 declare global {
-  interface Window {
-    XtermBlazor: XtermBlazor;
-  }
+  var XtermBlazor: XtermBlazor;
 }
 
-window.XtermBlazor = new XtermBlazor();
+globalThis.XtermBlazor = new XtermBlazor();
