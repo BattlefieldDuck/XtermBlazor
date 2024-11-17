@@ -138,6 +138,13 @@ Blazor Server `_Host.cshtml`
 }
 ```
 
+## Real-world uses
+
+- [**Moonlight Panel**](https://moonlightpanel.xyz): The next generation hosting panel
+- [**blazork8s**](https://github.com/weibaohui/blazork8s): About manage k8s using c# blazor enhance by chatgpt, try something new！使用blazor技术开发的内置OpenAI GPT的k8s 管理界面
+- [**KubeUI**](https://KubeUI.com): Kubernetes User Interface
+- [And much more...](https://github.com/BattlefieldDuck/XtermBlazor/network/dependents)
+
 ## Contributing
 Contributions are welcome! Please feel free to submit pull requests or open issues.
 
