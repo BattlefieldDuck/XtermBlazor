@@ -22,20 +22,16 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet }}
 
-      - name: Create temporary global.json
-        run: |
-          echo '{"sdk":{"version": "${{ steps.setup-dotnet.outputs.dotnet-version }}"}}' > ./global.json
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Restore .NET dependencies
-        run: dotnet restore XtermBlazor
+        run: dotnet restore XtermBlazor/XtermBlazor
 
       - name: Build .NET project
-        run: dotnet build XtermBlazor --no-restore
+        run: dotnet build XtermBlazor/XtermBlazor --no-restore
 
     # - name: Test
     #   run: dotnet test XtermBlazor --no-build --verbosity normal
