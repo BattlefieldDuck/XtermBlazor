@@ -23,7 +23,8 @@ jobs:
           dotnet-version: ${{ matrix.dotnet }}
 
       - name: Create temporary global.json
-        run: echo '{"sdk":{"version": "${{ steps.setup-dotnet.outputs.dotnet-version }}"}}' > ./global.json
+        run: |
+          echo '{"sdk":{"version": "${{ steps.setup-dotnet.outputs.dotnet-version }}"}}' > ./global.json
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
