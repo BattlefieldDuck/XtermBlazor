@@ -9,29 +9,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet: [6, 7, 8, 9]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
-        id: setup-dotnet
         with:
-          dotnet-version: ${{ matrix.dotnet }}
+          dotnet-version: |
+            10.0.x
+            9.0.x
+            8.0.x
+            7.0.x
+            6.0.x
 
+      - name: Display dotnet version
+        run: dotnet --version
+            
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Restore .NET dependencies
-        run: dotnet restore ./XtermBlazor/XtermBlazor.csproj
+        run: dotnet restore XtermBlazor
 
       - name: Build .NET project
-        run: dotnet build ./XtermBlazor/XtermBlazor.csproj --no-restore
+        run: dotnet build XtermBlazor --no-restore
 
     # - name: Test
     #   run: dotnet test XtermBlazor --no-build --verbosity normal
