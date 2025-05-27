@@ -28,10 +28,10 @@ jobs:
           node-version: 18
 
       - name: Restore .NET dependencies
-        run: dotnet restore XtermBlazor/XtermBlazor
+        run: dotnet restore ./XtermBlazor/XtermBlazor.csproj
 
       - name: Build .NET project
-        run: dotnet build XtermBlazor/XtermBlazor --no-restore
+        run: dotnet build ./XtermBlazor/XtermBlazor.csproj --no-restore
 
     # - name: Test
     #   run: dotnet test XtermBlazor --no-build --verbosity normal
