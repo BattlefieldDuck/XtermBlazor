@@ -140,9 +140,10 @@ Blazor Server `_Host.cshtml`
 
 ## Real-world uses
 
-- [**Moonlight Panel**](https://moonlightpanel.xyz): The next generation hosting panel
+- [**Moonlight**](https://github.com/Moonlight-Panel/Moonlight): The next generation hosting panel
+- [**LANCommander**](https://github.com/LANCommander/LANCommander): LANCommander is an open-source digital game platform.
+- [**KubeUI**](https://github.com/IvanJosipovic/KubeUI): Kubernetes User Interface
 - [**blazork8s**](https://github.com/weibaohui/blazork8s): About manage k8s using c# blazor enhance by chatgpt, try something new！使用blazor技术开发的内置OpenAI GPT的k8s 管理界面
-- [**KubeUI**](https://KubeUI.com): Kubernetes User Interface
 - [And much more...](https://github.com/BattlefieldDuck/XtermBlazor/network/dependents)
 
 ## Contributing
