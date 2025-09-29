@@ -3,10 +3,12 @@ name: Publish Dotnet Package (NuGet)
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
+  id-token: write  # enable GitHub OIDC token issuance for this job
 
 jobs:
   deploy:
