@@ -10,8 +10,8 @@ updates:
     schedule:
       interval: "monthly"
       day: "monday"
-      time: "09:00"   # UTC
-    labels: ["deps", "automated"]
+      time: "09:00"
+    labels: ["github_actions", "dependencies"]
     groups:
       actions-minor-and-patch:
         update-types: ["minor", "patch"]
@@ -24,7 +24,7 @@ updates:
       interval: "monthly"
       day: "monday"
       time: "09:00"
-    labels: ["deps", "automated"]
+    labels: [".NET", "dependencies"]
     groups:
       nuget-minor-and-patch:
         update-types: ["minor", "patch"]
@@ -37,7 +37,7 @@ updates:
       interval: "monthly"
       day: "monday"
       time: "09:00"
-    labels: ["deps", "automated"]
+    labels: ["javascript", "dependencies"]
     groups:
       npm-minor-and-patch:
         update-types: ["minor", "patch"]
