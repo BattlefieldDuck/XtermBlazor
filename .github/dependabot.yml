@@ -43,3 +43,5 @@ updates:
         update-types: ["minor", "patch"]
       npm-majors:
         update-types: ["major"]
+    versioning-strategy: increase
+
