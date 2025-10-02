@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
       day: "monday"
       time: "09:00"
     labels: ["github_actions", "dependencies"]
@@ -21,7 +21,7 @@ updates:
   - package-ecosystem: "nuget"
     directory: "/XtermBlazor"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
       day: "monday"
       time: "09:00"
     labels: [".NET", "dependencies"]
@@ -34,7 +34,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/XtermBlazor/src"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
       day: "monday"
       time: "09:00"
     labels: ["javascript", "dependencies"]
@@ -44,4 +44,3 @@ updates:
       npm-majors:
         update-types: ["major"]
     versioning-strategy: increase
-
