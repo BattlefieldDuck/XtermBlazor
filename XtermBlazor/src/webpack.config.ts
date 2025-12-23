@@ -36,8 +36,8 @@ const common: Configuration = {
         ],
     },
     performance: {
-        maxAssetSize: 300000,
-        maxEntrypointSize: 300000,
+        maxAssetSize: 400000,
+        maxEntrypointSize: 400000,
     }
 };
 
