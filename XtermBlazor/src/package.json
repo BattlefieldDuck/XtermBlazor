@@ -15,13 +15,13 @@
   },
   "devDependencies": {
     "css-loader": "^7.1.2",
-    "css-minimizer-webpack-plugin": "^7.0.3",
-    "esbuild-loader": "^4.4.0",
+    "css-minimizer-webpack-plugin": "^7.0.4",
+    "esbuild-loader": "^4.4.1",
     "mini-css-extract-plugin": "^2.9.4",
     "ts-loader": "9.5.4",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
-    "webpack": "^5.103.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "6.0.1",
     "webpack-merge": "^6.0.1"
   }
