@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net8.0;net7.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;net9.0;net8.0;net7.0;net6.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +19,7 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Description>Brings xterm.js to Blazor</Description>
 		<PackageIcon>icon.png</PackageIcon>
-		<Version>2.2.0</Version>
+		<Version>2.3.0</Version>
 		<PackageTags>
 			xterm, xterm-js, blazor, blazor-server, blazor-webassembly, blazor-wasm,
 			xtermblazor
@@ -64,7 +64,7 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0-rc.1.25451.107" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

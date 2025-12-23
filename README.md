@@ -87,7 +87,7 @@ To use `@xterm/addon-fit` addon, you need to add the following to your HTML body
 Blazor WebAssembly `index.html`
 ```html
 <!-- Add addon-fit.min.js before blazor.webassembly.js and XtermBlazor.min.js -->
-<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.11.0/lib/addon-fit.min.js"></script>
 
 <script src="_framework/blazor.webassembly.js"></script>
 <script>navigator.serviceWorker.register('service-worker.js');</script>
@@ -100,7 +100,7 @@ Blazor WebAssembly `index.html`
 Blazor Server `_Host.cshtml`
 ```html
 <!-- Add addon-fit.min.js before blazor.server.js and XtermBlazor.min.js -->
-<script src="https://cdn.jsdelivr.net/npm/@@xterm/addon-fit@0.9.0/lib/addon-fit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@xterm/addon-fit@0.11.0/lib/addon-fit.min.js"></script>
 
 <script src="_framework/blazor.server.js"></script>
 

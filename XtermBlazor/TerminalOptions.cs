@@ -119,13 +119,6 @@ namespace XtermBlazor
         public bool? DrawBoldTextInBrightColors { get; set; }
 
         /// <summary>
-        /// The modifier key hold to multiply scroll speed.
-        /// </summary>
-        [JsonPropertyName("fastScrollModifier")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public FastScrollModifier? FastScrollModifier { get; set; }
-
-        /// <summary>
         /// The scroll speed multiplier used for fast scrolling.
         /// </summary>
         [JsonPropertyName("fastScrollSensitivity")]
@@ -336,27 +329,6 @@ namespace XtermBlazor
         public Theme Theme { get; set; } = new();
 
         /// <summary>
-        /// Whether "Windows mode" is enabled. Because Windows backends winpty and
-        /// conpty operate by doing line wrapping on their side, xterm.js does not
-        /// have access to wrapped lines.When Windows mode is enabled the following
-        /// changes will be in effect:
-        ///
-        /// - Reflow is disabled.
-        /// - Lines are assumed to be wrapped if the last character of the line is
-        ///   not whitespace.
-        ///
-        /// When using conpty on Windows 11 version >= 21376, it is recommended to
-        /// disable this because native text wrapping sequences are output correctly
-        /// thanks to https://github.com/microsoft/terminal/issues/405
-        ///
-        /// @deprecated Use {@link windowsPty}. This value will be ignored if
-        /// windowsPty is set.
-        /// </summary>
-        [JsonPropertyName("windowsMode")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public bool? WindowsMode { get; set; }
-
-        /// <summary>
         /// Compatibility information when the pty is known to be hosted on Windows.
         /// Setting this will turn on certain heuristics/workarounds depending on the
         /// values:
@@ -384,25 +356,21 @@ namespace XtermBlazor
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? WordSeparator { get; set; }
 
-
-#pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// Enable various window manipulation and report features.
         /// All features are disabled by default for security reasons.
         /// </summary>
-        //[JsonPropertyName("windowOptions")]
-        //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        //public WindowOptions? WindowOptions { get; set; }
-#pragma warning restore CS1587 // XML comment is not placed on a valid language element
+        [JsonPropertyName("windowOptions")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public WindowOptions? WindowOptions { get; set; }
 
         /// <summary>
-        /// The width, in pixels, of the canvas for the overview ruler. The overview
-        /// ruler will be hidden when not set.
+        /// Controls the visibility and style of the overview ruler which visualizes
+        /// decorations underneath the scroll bar.
         /// </summary>
-        [JsonPropertyName("overviewRulerWidth")]
-
+        [JsonPropertyName("overviewRuler")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int? OverviewRulerWidth { get; set; }
+        public OverviewRulerOptions? OverviewRuler { get; set; }
     }
 
     /// <summary>
@@ -465,37 +433,6 @@ namespace XtermBlazor
         /// </summary>
         [EnumMember(Value = "none")]
         None
-    }
-
-    /// <summary>
-    /// The modifier key hold to multiply scroll speed.
-    /// </summary>
-    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum FastScrollModifier
-    {
-        /// <summary>
-        /// None
-        /// </summary>
-        [EnumMember(Value = "none")]
-        None,
-
-        /// <summary>
-        /// Alt
-        /// </summary>
-        [EnumMember(Value = "alt")]
-        Alt,
-
-        /// <summary>
-        /// Ctrl
-        /// </summary>
-        [EnumMember(Value = "ctrl")]
-        Ctrl,
-
-        /// <summary>
-        /// Shift
-        /// </summary>
-        [EnumMember(Value = "shift")]
-        Shift
     }
 
     /// <summary>

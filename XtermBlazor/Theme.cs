@@ -57,6 +57,35 @@ namespace XtermBlazor
         public string? SelectionInactiveBackground { get; set; }
 
         /// <summary>
+        /// The scrollbar slider background color. Defaults to <c>foreground</c> with 20% opacity.
+        /// </summary>
+        [JsonPropertyName("scrollbarSliderBackground")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? ScrollbarSliderBackground { get; set; }
+
+        /// <summary>
+        /// The scrollbar slider background color when hovered. Defaults to <c>foreground</c> with 40% opacity.
+        /// </summary>
+        [JsonPropertyName("scrollbarSliderHoverBackground")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? ScrollbarSliderHoverBackground { get; set; }
+
+        /// <summary>
+        /// The scrollbar slider background color when clicked. Defaults to <c>foreground</c> with 50% opacity.
+        /// </summary>
+        [JsonPropertyName("scrollbarSliderActiveBackground")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? ScrollbarSliderActiveBackground { get; set; }
+
+        /// <summary>
+        /// The border color of the overview ruler. This visually separates the terminal from the scroll bar
+        /// when <c>OverviewRulerOptions.width</c> is set. Defaults to black (<c>#000000</c>) when not set.
+        /// </summary>
+        [JsonPropertyName("overviewRulerBorder")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? OverviewRulerBorder { get; set; }
+
+        /// <summary>
         /// ANSI black (eg. `\x1b[30m`)
         /// </summary>
         [JsonPropertyName("black")]
