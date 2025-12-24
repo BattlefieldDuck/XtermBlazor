@@ -140,6 +140,7 @@ Blazor Server `_Host.cshtml`
 
 ## Real-world uses
 
+- [**SharpIDE**](https://github.com/MattParkerDev/SharpIDE): A modern, cross platform IDE for .NET, built with .NET & Godot
 - [**Moonlight**](https://github.com/Moonlight-Panel/Moonlight): The next generation hosting panel
 - [**LANCommander**](https://github.com/LANCommander/LANCommander): LANCommander is an open-source digital game platform.
 - [**KubeUI**](https://github.com/IvanJosipovic/KubeUI): Kubernetes User Interface
