@@ -7,7 +7,10 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": [
+      "node"
+    ]
   },
   "exclude": [
     "node_modules"
