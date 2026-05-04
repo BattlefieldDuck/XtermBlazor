@@ -1,4 +1,3 @@
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { EsbuildPlugin } from 'esbuild-loader';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
@@ -6,9 +5,16 @@ import type { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 
 const common: Configuration = {
+    entry: {
+        'XtermBlazor.min': './index.ts',
+    },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, '../wwwroot'),
+        clean: true,
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
     module: {
         rules: [
@@ -18,7 +24,10 @@ const common: Configuration = {
             },
             {
                 test: /\.[jt]sx?$/,
-                loader: 'esbuild-loader'
+                loader: 'esbuild-loader',
+                options: {
+                    target: 'es2015'
+                }
             }
         ],
     },
@@ -27,14 +36,6 @@ const common: Configuration = {
             filename: '[name].css',
         }),
     ],
-    optimization: {
-        minimizer: [
-            new CssMinimizerPlugin(),
-            new EsbuildPlugin({
-                css: true
-            })
-        ],
-    },
     performance: {
         maxAssetSize: 400000,
         maxEntrypointSize: 400000,
@@ -45,8 +46,14 @@ export default (env: { production: boolean }) => {
     if (env.production) {
         return merge(common, {
             mode: 'production',
-            entry: {
-                'XtermBlazor.min': './index.ts',
+            optimization: {
+                minimize: true,
+                minimizer: [
+                    new EsbuildPlugin({
+                        target: 'es2015',
+                        css: true
+                    })
+                ],
             }
         });
     }
@@ -54,8 +61,5 @@ export default (env: { production: boolean }) => {
     return merge(common, {
         mode: 'development',
         devtool: 'inline-source-map',
-        entry: {
-            'XtermBlazor.min': './index.ts',
-        }
     });
 };
