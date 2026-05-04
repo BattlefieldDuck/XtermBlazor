@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2021",
+    "module": "es2022",
+    "target": "es2022",
     "alwaysStrict": true,
     "noImplicitAny": true,
     "removeComments": true,

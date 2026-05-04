@@ -10,7 +10,7 @@ const common: Configuration = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, '../wwwroot'),
+        path: path.resolve(import.meta.dirname, '../wwwroot'),
         clean: true,
     },
     resolve: {
