@@ -12,6 +12,11 @@
       "node"
     ]
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
   "exclude": [
     "node_modules"
   ]
