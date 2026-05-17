@@ -2,7 +2,6 @@
   "name": "xterm-blazor",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "description": "Brings xterm.js to Blazor",
   "main": "index.ts",
   "scripts": {

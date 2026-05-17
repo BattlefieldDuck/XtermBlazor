@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es2022",
     "target": "es2022",
     "alwaysStrict": true,
     "noImplicitAny": true,
