@@ -18,11 +18,11 @@
     "css-loader": "^7.1.4",
     "esbuild-loader": "^4.4.3",
     "mini-css-extract-plugin": "^2.10.2",
-    "ts-loader": "9.5.7",
+    "ts-loader": "9.6.0",
     "ts-node": "10.9.2",
     "typescript": "6.0.3",
-    "webpack": "^5.107.1",
-    "webpack-cli": "7.0.2",
+    "webpack": "^5.107.2",
+    "webpack-cli": "7.0.3",
     "webpack-merge": "^6.0.1"
   }
 }
