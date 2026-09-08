@@ -14,13 +14,13 @@
     "@xterm/xterm": "^6.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.4.1",
     "css-loader": "^7.1.5",
     "esbuild-loader": "^4.5.0",
     "mini-css-extract-plugin": "^2.10.2",
     "ts-loader": "9.6.2",
     "ts-node": "10.9.2",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "webpack": "^5.110.3",
     "webpack-cli": "7.2.3",
     "webpack-merge": "^6.0.1"
