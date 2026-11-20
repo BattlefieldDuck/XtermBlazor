@@ -8,39 +8,14 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    labels: ["github_actions", "dependencies"]
-    groups:
-      actions-minor-and-patch:
-        update-types: ["minor", "patch"]
-      actions-majors:
-        update-types: ["major"]
+        interval: "weekly"
 
   - package-ecosystem: "nuget"
     directory: "/XtermBlazor"
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    labels: [".NET", "dependencies"]
-    groups:
-      nuget-minor-and-patch:
-        update-types: ["minor", "patch"]
-      nuget-majors:
-        update-types: ["major"]
+        interval: "weekly"
 
   - package-ecosystem: "npm"
     directory: "/XtermBlazor/src"
     schedule:
       interval: "weekly"
-      day: "monday"
-      time: "09:00"
-    labels: ["javascript", "dependencies"]
-    groups:
-      npm-minor-and-patch:
-        update-types: ["minor", "patch"]
-      npm-majors:
-        update-types: ["major"]
-    versioning-strategy: increase

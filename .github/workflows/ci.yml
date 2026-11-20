@@ -1,4 +1,4 @@
-name: Dotnet Package
+name: Continuous Integration
 
 on:
   push:
@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   build:
+    name: Dotnet Build
     runs-on: ubuntu-latest
 
     steps:
