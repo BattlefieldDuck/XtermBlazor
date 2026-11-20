@@ -14,7 +14,7 @@
     "@xterm/xterm": "^6.0.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.8",
+    "@types/node": "^26.6.6",
     "css-loader": "^7.1.5",
     "esbuild-loader": "^4.5.0",
     "mini-css-extract-plugin": "^2.10.2",
